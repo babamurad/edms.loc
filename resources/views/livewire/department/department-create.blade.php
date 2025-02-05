@@ -27,30 +27,33 @@
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label class="form-label" for="validationCustom01">{{ __('Title') }}</label>
-                            <input type="text" class="form-control" id="validationCustom01" placeholder="Title" wire:model="title">
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="validationCustom01" placeholder="Title" wire:model="title" wire:keyup="generateSlug()">
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
+                            @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label class="form-label" for="validationCustom02">{{ __('Slug') }}</label>
-                            <input type="text" class="form-control" id="validationCustom02" wire:model="slug">
+                            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="validationCustom02" wire:model="slug">
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
+                            @error('slug') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="example-textarea" class="form-label">{{ __('Description') }}</label>
-                    <textarea class="form-control" id="example-textarea" rows="5" wire:model="description"></textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="example-textarea" rows="5" wire:model="description"></textarea>
+                    @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
-                
-                
+
+
                 <button class="btn btn-primary" type="submit">Submit form</button>
-            </form>    
+            </form>
 
         </div> <!-- end card body-->
     </div>

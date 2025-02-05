@@ -18,4 +18,11 @@ class DepartmentIndex extends Component
         $departments = Department::paginate($this->perPage);
         return view('livewire.department.department-index', compact('departments'));
     }
+
+    public function delete($id)
+    {
+        $this->delId = $id;
+    } 
+    
+    
 }
