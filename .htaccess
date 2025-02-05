@@ -1,0 +1,12 @@
+RewriteEngine ON
+RewriteRule ^(.*) public/$1 [L]
+
+<IfModule mod_mime.c>
+    AddType application/javascript .js
+    AddType text/css .css
+</IfModule>
+
+<FilesMatch "livewire\.js$">
+    Header set Content-Type "application/javascript"
+</FilesMatch>
+
