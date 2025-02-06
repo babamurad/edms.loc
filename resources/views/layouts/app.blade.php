@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Dashboard | Velonic - Bootstrap 5 Admin & Dashboard Template</title>
+        <title>{{ $title ?? 'Document Managment System' }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
         <meta content="Techzaa" name="author" />
@@ -12,16 +12,16 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
         <!-- Daterangepicker css -->
-        <link rel="stylesheet" href="{{ asset('assets/vendor/daterangepicker/daterangepicker.css') }}">
+{{--        <link rel="stylesheet" href="{{ asset('assets/vendor/daterangepicker/daterangepicker.css') }}">--}}
 
         <!-- Vector Map css -->
-        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">
+{{--        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">--}}
 
         <!-- Theme Config Js -->
         <script src="{{ asset('assets/js/config.js') }}"></script>
 
         <!-- App css -->
-        <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+        <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
         <!-- Icons css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -31,7 +31,7 @@
         <!-- Begin page -->
         <div class="wrapper">
 
-            
+
             <!-- ========== Topbar Start ========== -->
             <div class="navbar-custom">
                 <div class="topbar container-fluid">
@@ -377,7 +377,7 @@
                 </div>
             </div>
             <!-- ========== Topbar End ========== -->
-            
+
 
             <!-- ========== Left Sidebar Start ========== -->
             <livewire:partials.leftside-menu />
@@ -605,21 +605,21 @@
                     </div>
                 </div>
             </div>
-        </div>        
-        
+        </div>
+
         <!-- Vendor js -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
         <!-- Daterangepicker js -->
-        <script src="{{ asset('assets/vendor/daterangepicker/moment.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/daterangepicker/daterangepicker.js') }}"></script>
-        
+{{--        <script src="{{ asset('assets/vendor/daterangepicker/moment.min.js') }}"></script>--}}
+{{--        <script src="{{ asset('assets/vendor/daterangepicker/daterangepicker.js') }}"></script>--}}
+
         <!-- Apex Charts js -->
         <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
 
         <!-- Vector Map js -->
-        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
+{{--        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>--}}
+{{--        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"></script>--}}
 
         <!-- Dashboard App js -->
         <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
@@ -629,4 +629,4 @@
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
     </body>
-</html> 
+</html>

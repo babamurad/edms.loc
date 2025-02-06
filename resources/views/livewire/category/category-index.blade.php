@@ -1,5 +1,5 @@
 <div class="row" x-data="{delId: @entangle('delId'), showModal: @entangle('showModal')}">
-    <x-slot name="title">{{ __('Departments') }}</x-slot>
+    <x-slot name="title">{{ __('Categories') }}</x-slot>
     <div class="col-12">
         <div class="page-title-box">
             <div class="page-title-right">
@@ -9,7 +9,7 @@
                     <li class="breadcrumb-item active">Starter</li>
                 </ol>
             </div>
-            <h4 class="page-title">{{ __('Departments') }}</h4>
+            <h4 class="page-title">{{ __('Categories') }}</h4>
             @if (session()->has('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -25,8 +25,8 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex  justify-content-between">
-                <h4 class="header-title">{{ __('Departments List') }}</h4>
-                <a href="{{ route('department.create') }}" type="button" class="btn btn-primary">Create</a>
+                <h4 class="header-title">{{ __('Categories List') }}</h4>
+                <a href="{{ route('category.create') }}" type="button" class="btn btn-primary">Create</a>
             </div>
         </div>
         <div class="card-body">
@@ -36,24 +36,24 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
+                        <th>Department</th>
                         <th>Slug</th>
-                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($departments as $department)
+                    @foreach ($categories as $category)
                         <tr @wire:key="{{ $this->delId }}">
-                            <td>{{ $department->id }}</td>
-                            <td><a href="{{ route('department.edit', ['id' => $department->id]) }}">{{ $department->title }}</a></td>
-                            <td><span class="badge bg-primary">{{ $department->slug }}</span></td>
-                            <td>{{ $department->description }}</td>
+                            <td>{{ $category->id }}</td>
+                            <td><a href="{{ route('category.edit', ['id' => $category->id]) }}">{{ $category->title }}</a></td>
+                            <td><span class="badge bg-primary">{{ $category->department->title }}</span></td>
+                            <td>{{ $category->slug }}</td>
                             <td>
-                                <a type="button" href="{{ route('department.edit', ['id' => $department->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
+                                <a type="button" href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
                                 <button type="button" class="btn btn-sm btn-danger" style="float: none;"
-{{--                                        data-bs-toggle="modal" data-bs-target="#ConfirmDelete" --}}
+                                        {{--                                        data-bs-toggle="modal" data-bs-target="#ConfirmDelete" --}}
 
-                                        @click="showModal = true, delId={{ $department->id }}">
+                                        @click="showModal = true, delId={{ $category->id }}">
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
                             </td>
@@ -62,10 +62,10 @@
 
                     </tbody>
                 </table>
-                @if(!$departments)
+                @if(!$categories)
                     <p>No items found.</p>
                 @else
-                    {{ $departments->links() }}
+                    {{ $categories->links() }}
                 @endif
             </div> <!-- end table-responsive-->
             <!-- Top modal content -->

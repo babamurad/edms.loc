@@ -6326,7 +6326,7 @@ textarea.form-control-lg {
   top: 0;
   left: 0;
   z-index: var(--tz-modal-zindex);
-  display: none;
+  /*display: none;*/
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -20377,3 +20377,6 @@ span.flatpickr-weekday,
   margin: -0.5rem -0.75rem;
   padding: 0.5rem 0.75rem;
 }
+/*.modal{*/
+/*    display: block !important;*/
+/*}*/

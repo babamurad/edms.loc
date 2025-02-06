@@ -1,4 +1,5 @@
 <div>
+    <x-slot name="title">Document Managment System</x-slot>
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -275,7 +276,7 @@
                     </div> <!-- end .chat-conversation-->
                 </div>
             </div>
-            
+
         </div> <!-- end card-->
     </div> <!-- end col-->
 
@@ -368,9 +369,9 @@
 
                             </tbody>
                         </table>
-                    </div>        
+                    </div>
                 </div>
-            </div>                           
+            </div>
         </div> <!-- end card-->
     </div> <!-- end col-->
 </div>

@@ -12,6 +12,7 @@ class DepartmentIndex extends Component
     protected $paginationTheme = 'bootstrap';
     public $delId;
     public $perPage = 8;
+    public $showModal = false;
 
     public function render()
     {
@@ -22,7 +23,13 @@ class DepartmentIndex extends Component
     public function delete($id)
     {
         $this->delId = $id;
-    } 
-    
-    
+    }
+
+    public function destroy()
+    {
+        $department = Department::findOrFail($this->delId);
+        $department->delete();
+        $this->showModal = false;
+        session()->flash('success', 'Department deleted successfully.');
+    }
 }

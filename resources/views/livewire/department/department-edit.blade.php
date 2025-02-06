@@ -1,4 +1,5 @@
 <div class="row">
+    <x-slot name="title">{{ __('Edit Department') }}</x-slot>
     <div class="col-12">
         <div class="page-title-box">
             <div class="page-title-right">
@@ -47,9 +48,8 @@
                     <label for="example-textarea" class="form-label">{{ __('Description') }}</label>
                     <textarea class="form-control" id="example-textarea" rows="5" wire:model="description"></textarea>
                 </div>
-
-
-                <button class="btn btn-primary" type="submit">Submit form</button>
+                <button class="btn btn-primary" type="submit">{{__('Update')}}</button>
+                <a type="button" href="{{ route('department') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
             </form>
 
         </div> <!-- end card body-->

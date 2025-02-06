@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Category\CategoryCreate;
+use App\Livewire\Category\CategoryEdit;
+use App\Livewire\Category\CategoryIndex;
 use App\Livewire\Department\DepartmentCreate;
 use App\Livewire\Department\DepartmentEdit;
 use App\Livewire\Department\DepartmentIndex;
@@ -19,4 +22,8 @@ Route::get('login', Login::class)->name('login');
 Route::get('department', DepartmentIndex::class)->name('department');
 Route::get('department/create', DepartmentCreate::class)->name('department.create');
 Route::get('department/{id}/edit', DepartmentEdit::class)->name('department.edit');
+
+Route::get('category', CategoryIndex::class)->name('category');
+Route::get('category/create', CategoryCreate::class)->name('category.create');
+Route::get('category/{id}/edit', CategoryEdit::class)->name('category.edit');
 

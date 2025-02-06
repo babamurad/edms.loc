@@ -40,6 +40,12 @@
                     <span> {{ __('Departments') }} </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('category') }}" class="side-nav-link {{ request()->is('category') ? 'active' : '' }}">
+                    <i class="ri-briefcase-line"></i>
+                    <span> {{ __('Category') }} </span>
+                </a>
+            </li>
 
         </ul>
         <!--- End Sidemenu -->
