@@ -25,6 +25,8 @@
 
         <!-- Icons css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        @stack('editor')
+{{--        <x-head.tinymce-config/>--}}
     </head>
 
     <body>
@@ -627,6 +629,6 @@
 
         <!-- App js -->
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
-
+        @stack('summernote')
     </body>
 </html>

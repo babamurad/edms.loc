@@ -25,11 +25,11 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('file');
-            $table->string('type');
+            $table->string('file')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('is_published')->default(false);
             $table->foreignId('status_id')->nullable()->constrained();
-            $table->text('comment')->nullable();
+            $table->longText('content')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('rejected_at')->nullable();
             $table->timestamp('submitted_at')->nullable();

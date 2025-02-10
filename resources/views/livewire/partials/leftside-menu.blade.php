@@ -36,7 +36,7 @@
 
             <li class="side-nav-item">
                 <a href="{{ route('department') }}" class="side-nav-link {{ request()->is('department') ? 'active' : '' }}">
-                    <i class="ri-pages-line"></i>
+                    <i class="ri-archive-drawer-fill"></i>
                     <span> {{ __('Departments') }} </span>
                 </a>
             </li>
@@ -44,6 +44,12 @@
                 <a href="{{ route('category') }}" class="side-nav-link {{ request()->is('category') ? 'active' : '' }}">
                     <i class="ri-briefcase-line"></i>
                     <span> {{ __('Category') }} </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('documents') }}" class="side-nav-link {{ request()->is('documents') ? 'active' : '' }}">
+                    <i class="ri-file-list-fill"></i>
+                    <span> {{ __('Documents') }} </span>
                 </a>
             </li>
 
