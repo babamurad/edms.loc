@@ -9,6 +9,7 @@ use App\Livewire\Department\DepartmentIndex;
 use App\Livewire\Documents\DocumentsCreate;
 use App\Livewire\Documents\DocumentsEdit;
 use App\Livewire\Documents\DocumentsIndex;
+use App\Livewire\Documents\DocumentsUpload;
 use App\Livewire\Documents\DocumentsView;
 use App\Livewire\HomeComponent;
 use App\Livewire\User\Login;
@@ -29,7 +30,8 @@ Route::middleware('auth')->group(function (){
     Route::get('documents',DocumentsIndex::class)->name('documents');
     Route::get('documents/create', DocumentsCreate::class)->name('documents.create');
     Route::get('documents/{id}/edit', DocumentsEdit::class)->name('documents.edit');
-    Route::name('documents/{id}/view',DocumentsView::class)->name('document.view');
+    Route::get('documents/{id}/view',DocumentsView::class)->name('documents.view');
+    Route::get('documents/upload', DocumentsUpload::class)->name('documents.upload');
 });
 
 Route::middleware('guest')->group(function (){

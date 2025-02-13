@@ -24,9 +24,15 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="d-flex  justify-content-between">
-                <h4 class="header-title">{{ __('Documents List') }}</h4>
-                <a href="{{ route('documents.create') }}" type="button" class="btn btn-primary">Create</a>
+            <div class="row">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="header-title">{{ __('Documents List') }}</h4>
+                    <div>
+{{--                        <a href="{{ route('documents.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>--}}
+                        <a href="{{ route('documents.upload') }}" type="button" class="btn btn-primary">{{ __('Upload') }}</a>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="card-body">
@@ -46,7 +52,7 @@
                         <tr @wire:key="{{ $this->delId }}">
                             <td>{{ $document->id }}</td>
                             <td><a href="{{ route('category.edit', ['id' => $document->id]) }}">{{ $document->title }}</a></td>
-                            <td><span class="badge bg-primary">{{ $document->department->title }}</span></td>
+                            <td><span class="badge bg-primary">{{ @$document->department->title }}</span></td>
                             <td>{{ $document->slug }}</td>
                             <td>
                                 <a type="button" href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
