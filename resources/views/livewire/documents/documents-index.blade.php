@@ -36,6 +36,20 @@
             </div>
         </div>
         <div class="card-body">
+
+            <div class="row">
+                @foreach ($documents as $doc)
+                    <div class="col-md-2 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="bi {{ $doc->file_icon }} text-primary" style="font-size: 2rem;"></i>
+                            <p class="mt-2">{{ $doc->file }}</p>
+                            <a href="{{ asset($doc->FileUrl) }}" target="_blank" class="btn btn-sm btn-success">Открыть</a>
+                            <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger">Удалить</button>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
             <div class="table-responsive-sm">
                 <table class="table table-hover table-centered mb-0">
                     <thead>

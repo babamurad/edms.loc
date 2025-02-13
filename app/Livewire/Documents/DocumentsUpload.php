@@ -64,11 +64,13 @@ class DocumentsUpload extends Component
         $document->category_id = $this->selectedCategory;
         $document->status_id = $this->selectedStatus;
         $document->is_published = $this->is_published?? 0;
+        $filename = time() . '_' . $this->file->getClientOriginalName();
+        $this->file->storeAs('public/documents/' . auth()->user()->name, $filename);
+        $document->file = $filename;
         $document->save();
 
         // Upload file
-        $filename = time() . '_' . $this->file->getClientOriginalName();
-        $this->file->storeAs('public/documents/' . auth()->user()->name, $filename. '.'. $this->file->getClientOriginalExtension());
+
 
         $this->reset();
         session()->flash('message', 'Document uploaded successfully!');

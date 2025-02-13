@@ -57,8 +57,9 @@
                         <div class="col-sm-9">
                             <div class="mb-3">
                                 <label for="example-fileinput" class="form-label">Default file
-                                    input</label>
+                                    input (max 20mb)</label>
                                 <input type="file" id="example-fileinput" class="form-control" wire:model="file">
+                                @error('file') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="col-sm-3">
