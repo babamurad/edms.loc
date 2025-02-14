@@ -22,6 +22,30 @@
             @endif
         </div>
     </div>
+    <livewire:file-manager />
+    <div class="row">
+        @foreach ($documents as $doc)
+            <div class="col-md-2 mb-3">
+                <div class="card text-center p-3">
+                    <div class="card-image">
+                        <i class="bi {{ $doc->file_icon }} text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-title">
+                        <h6 class="mb-0">{{ $doc->title }}</h6>
+                        <span class="badge bg-primary">{{ $doc->category }}</span>
+                        <span class="badge bg-success">{{ $doc->status }}</span>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill">{{ $doc->created_at->format('d.m.Y') }}</span>
+                        <span class="badge bg-success-subtle text-success rounded-pill">{{ $doc->updated_at->format('d.m.Y') }}</span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ asset($doc->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1"><i class="bi bi-eye"></i></a>
+                        <a href="{{ route('documents.edit', ['id' => $doc->id]) }}" class="btn btn-sm btn-info me-1"><i class="bi bi-pencil"></i></a>
+                        <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -36,20 +60,6 @@
             </div>
         </div>
         <div class="card-body">
-
-            <div class="row">
-                @foreach ($documents as $doc)
-                    <div class="col-md-2 mb-3">
-                        <div class="card text-center p-3">
-                            <i class="bi {{ $doc->file_icon }} text-primary" style="font-size: 2rem;"></i>
-                            <p class="mt-2">{{ $doc->file }}</p>
-                            <a href="{{ asset($doc->FileUrl) }}" target="_blank" class="btn btn-sm btn-success">Открыть</a>
-                            <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger">Удалить</button>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
             <div class="table-responsive-sm">
                 <table class="table table-hover table-centered mb-0">
                     <thead>
