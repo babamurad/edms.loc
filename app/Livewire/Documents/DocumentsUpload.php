@@ -16,6 +16,7 @@ class DocumentsUpload extends Component
     public $contentDocs;
     public $titleDocs;
     public $fileDocs;
+    public $currentFolder;
 
     public $title, $slug, $description;
     public $departments;
@@ -38,8 +39,9 @@ class DocumentsUpload extends Component
         return view('livewire.documents.documents-upload');
     }
 
-    public function mount()
+    public function mount($folder = null)
     {
+        $this->currentFolder = $folder;
         $this->departments = Department::all();
         $this->categories = Category::all();
         $this->statuses = Status::all();
@@ -55,6 +57,7 @@ class DocumentsUpload extends Component
         //
         $this->validate();
 //        dd('suibmite');
+
         $document = new Document();
         $document->title = $this->title;
         $document->slug = $this->slug;
@@ -64,6 +67,7 @@ class DocumentsUpload extends Component
         $document->category_id = $this->selectedCategory;
         $document->status_id = $this->selectedStatus;
         $document->is_published = $this->is_published?? 0;
+        $document->folder = $this->currentFolder;
         $filename = time() . '_' . $this->file->getClientOriginalName();
         $this->file->storeAs('public/documents/' . auth()->user()->name, $filename);
         $document->file = $filename;

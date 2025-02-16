@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function (){
     Route::get('documents/create', DocumentsCreate::class)->name('documents.create');
     Route::get('documents/{id}/edit', DocumentsEdit::class)->name('documents.edit');
     Route::get('documents/{id}/view',DocumentsView::class)->name('documents.view');
-    Route::get('documents/upload', DocumentsUpload::class)->name('documents.upload');
+    Route::get('documents/upload/{folder?}', DocumentsUpload::class)->name('documents.upload');
 });
 
 Route::middleware('guest')->group(function (){
