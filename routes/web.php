@@ -11,6 +11,7 @@ use App\Livewire\Documents\DocumentsEdit;
 use App\Livewire\Documents\DocumentsIndex;
 use App\Livewire\Documents\DocumentsUpload;
 use App\Livewire\Documents\DocumentsView;
+use App\Livewire\FileManager;
 use App\Livewire\HomeComponent;
 use App\Livewire\User\Login;
 use App\Livewire\User\Register;
@@ -27,7 +28,8 @@ Route::middleware('auth')->group(function (){
     Route::get('category/create', CategoryCreate::class)->name('category.create');
     Route::get('category/{id}/edit', CategoryEdit::class)->name('category.edit');
 
-    Route::get('documents',DocumentsIndex::class)->name('documents');
+    // Route::get('documents',DocumentsIndex::class)->name('documents');
+    Route::get('documents', FileManager::class)->name('documents');
     Route::get('documents/create', DocumentsCreate::class)->name('documents.create');
     Route::get('documents/{id}/edit', DocumentsEdit::class)->name('documents.edit');
     Route::get('documents/{id}/view',DocumentsView::class)->name('documents.view');
