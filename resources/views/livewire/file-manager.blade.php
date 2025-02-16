@@ -24,19 +24,19 @@
             </div>            
         </div>
     </div>
-    <div class="d-flex" x-data="{ showDeleteModal: @entangle('showDeleteModal') }">
+    <div class="d-flex" x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal') }">
         <!-- Боковая панель с деревом папок -->
-        <div class="folder-tree border-end" style="width: 250px; min-height: 100vh; padding: 15px;">
+        <div class="folder-tree border-end" style="width: 22em; min-height: 100vh; padding: 15px;">
             {{-- <h5>Структура папок</h5> --}}
             <ul class="list-unstyled">
-                <li>
+                <li class="mb-1" style=" padding-left: 0px;">
                     <a href="javascript:;" wire:click.prevent="openFolder(null)" class="text-decoration-none">
                         <i class="bi bi-folder-fill text-warning"></i> Корневая папка
                         <span class="badge bg-primary rounded-pill">{{ App\Models\Document::where('folder', null)->count() }}</span>
                     </a>
                 </li>
                 @foreach($folderTree as $treeFolder)
-                    <li style="margin-left: {{ $treeFolder->level * 20 }}px">
+                    <li class="mb-1" style="margin-left: {{ $treeFolder->level * 20 }}px">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="javascript:;" 
                                wire:click.prevent="openFolder({{ $treeFolder->id }})"
@@ -45,10 +45,16 @@
                                 {{ $treeFolder->name }}
                                 <span class="badge bg-primary rounded-pill">{{ $treeFolder->documents_count }}</span>
                             </a>
-                            <button wire:click="confirmFolderDelete({{ $treeFolder->id }})" 
-                                    class="btn btn-sm btn-danger ms-2">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <div>
+                                <button wire:click="confirmFolderRename({{ $treeFolder->id }})" 
+                                        class="btn btn-sm btn-primary ms-2">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button wire:click="confirmFolderDelete({{ $treeFolder->id }})" 
+                                        class="btn btn-sm btn-danger ms-2">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </li>
                 @endforeach
@@ -105,6 +111,37 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Отмена</button>
                         <button type="button" class="btn btn-danger" wire:click="deleteFolder">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно переименования -->
+        <div x-show="showRenameModal" 
+             class="modal fade show" 
+             style="display: block; background-color: rgba(0,0,0,0.5);"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Переименование папки</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showRenameModal', false)"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newName" class="form-label">Новое имя папки</label>
+                            <input type="text" 
+                                   class="form-control @error('newName') is-invalid @enderror" 
+                                   id="newName" 
+                                   wire:model="newName">
+                            @error('newName')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">Отмена</button>
+                        <button type="button" class="btn btn-primary" wire:click="renameFolder">Сохранить</button>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,9 @@ class FileManager extends Component
     public $files = [];
     public $showDeleteModal = false;
     public $folderToDelete;
+    public $showRenameModal = false;
+    public $folderToRename;
+    public $newName;
 
     private function getFolderTree($parentId = null, $level = 0)
     {
@@ -110,5 +113,27 @@ class FileManager extends Component
         if ($this->currentFolder == $this->folderToDelete) {
             $this->openFolder($folder->parent_id);
         }
+    }
+
+    public function confirmFolderRename($folderId)
+    {
+        $folder = Folder::findOrFail($folderId);
+        $this->folderToRename = $folderId;
+        $this->newName = $folder->name;
+        $this->showRenameModal = true;
+    }
+
+    public function renameFolder()
+    {
+        $this->validate([
+            'newName' => 'required|string|max:255'
+        ]);
+
+        $folder = Folder::findOrFail($this->folderToRename);
+        $folder->name = $this->newName;
+        $folder->save();
+
+        $this->showRenameModal = false;
+        session()->flash('success', 'Папка успешно переименована');
     }
 }
