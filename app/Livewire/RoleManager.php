@@ -11,13 +11,7 @@ class RoleManager extends Component
     public $roles;
     public $selectedUser = null;
     public $selectedRole = null;
-    public $newRoleName;
-    public $showCreateModal = false;
     public $userOptions = [];
-
-    protected $rules = [
-        'newRoleName' => 'required|min:3|unique:roles,name'
-    ];
 
     public function mount()
     {
@@ -35,18 +29,9 @@ class RoleManager extends Component
         });
     }
 
-    public function createRole()
+    public function updateSelectedUser($value)
     {
-        $this->validate();
-
-        Role::create([
-            'name' => $this->newRoleName
-        ]);
-
-        $this->newRoleName = '';
-        $this->showCreateModal = false;
-        $this->roles = Role::all();
-        session()->flash('success', 'Роль успешно создана');
+        $this->selectedUser = $value;
     }
 
     public function assignRole()
@@ -57,6 +42,11 @@ class RoleManager extends Component
         }
 
         $user = User::find($this->selectedUser);
+        if (!$user) {
+            session()->flash('error', 'Пользователь не найден');
+            return;
+        }
+
         $user->roles()->syncWithoutDetaching([$this->selectedRole]);
         session()->flash('success', 'Роль успешно назначена');
     }
@@ -64,5 +54,12 @@ class RoleManager extends Component
     public function render()
     {
         return view('livewire.role-manager');
+    }
+
+    protected function getListeners()
+    {
+        return [
+            'custom-select-updated' => 'updateSelectedUser'
+        ];
     }
 }

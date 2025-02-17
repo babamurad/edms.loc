@@ -17,15 +17,13 @@ class CustomSelect extends Component
         $this->selected = $selected;
     }
 
-    public function render()
-    {
-        return view('livewire.components.custom-select', [
-            'options' => $this->options
-        ]);
-    }
-
     public function updatedSelected($value)
     {
-        $this->dispatch('optionSelected', $value);
+        $this->dispatch('custom-select-updated', value: $value);
+    }
+
+    public function render()
+    {
+        return view('livewire.components.custom-select');
     }
 }
