@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Folder;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class FileManager extends Component
 {
@@ -21,6 +22,8 @@ class FileManager extends Component
     public $folderToRename;
     public $newName;
     public $showCreateModal = false;
+    public $showFileDeleteModal = false;
+    public $fileToDelete;
 
     private function getFolderTree($parentId = null, $level = 0)
     {
@@ -94,7 +97,7 @@ class FileManager extends Component
 
     public function openFolder($folderId)
     {
-        $this->currentFolder = $folderId;
+        $this->currentFolder = $folderId === 'null' ? null : $folderId;
         $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
     }
 
@@ -145,5 +148,31 @@ class FileManager extends Component
 
         $this->showRenameModal = false;
         session()->flash('success', 'Папка успешно переименована');
+    }
+
+    public function confirmFileDelete($fileId)
+    {
+        $this->fileToDelete = $fileId;
+        $this->showFileDeleteModal = true;
+    }
+
+    public function deleteFile()
+    {
+        $document = Document::findOrFail($this->fileToDelete);
+        
+        // Удаляем физический файл
+        $filePath = 'public/documents/' . auth()->user()->name . '/' . $document->file;
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+        
+        // Удаляем запись из базы данных
+        $document->delete();
+        
+        $this->showFileDeleteModal = false;
+        session()->flash('success', 'Файл успешно удален');
+        
+        // Обновляем список файлов
+        $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
     }
 }

@@ -52,6 +52,12 @@
                     <span> {{ __('Documents') }} </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
+                    <i class="ri-file-list-fill"></i>
+                    <span> {{ __('Roles Manager') }} </span>
+                </a>
+            </li>
 
         </ul>
         <!--- End Sidemenu -->

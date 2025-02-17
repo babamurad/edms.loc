@@ -31,7 +31,7 @@
             </div>            
         </div>
     </div>
-    <div x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal'), showCreateModal: @entangle('showCreateModal') }">
+    <div x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal'), showCreateModal: @entangle('showCreateModal'), showFileDeleteModal: @entangle('showFileDeleteModal') }">
         <div class="p-3">
             <button class="btn btn-primary mb-3" wire:click="$set('showCreateModal', true)">
                 <i class="bi bi-folder-plus"></i> Создать папку
@@ -40,6 +40,12 @@
             <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary mb-3 ms-2">
                 <i class="bi bi-upload"></i> Загрузить документ
             </a>
+
+            @if($currentFolder)
+                <button class="btn btn-secondary mb-3 ms-2" wire:click="openFolder('{{ $currentFolderModel?->parent_id ?? 'null' }}')">
+                    <i class="bi bi-arrow-up"></i> Наверх
+                </button>
+            @endif
 
             <div class="row">
                 <!-- Отображение папок -->
@@ -82,7 +88,7 @@
                                 <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <button wire:click="delete({{ $file->id }})" class="btn btn-sm btn-danger">
+                                <button wire:click="confirmFileDelete({{ $file->id }})" class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -171,6 +177,28 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">Отмена</button>
                         <button type="button" class="btn btn-primary" wire:click="renameFolder">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно подтверждения удаления файла -->
+        <div x-show="showFileDeleteModal" 
+             class="modal fade show" 
+             style="display: block; background-color: rgba(0,0,0,0.5);"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Подтверждение удаления</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showFileDeleteModal', false)"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Вы уверены, что хотите удалить этот файл?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showFileDeleteModal', false)">Отмена</button>
+                        <button type="button" class="btn btn-danger" wire:click="deleteFile">Удалить</button>
                     </div>
                 </div>
             </div>
