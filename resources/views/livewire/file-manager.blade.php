@@ -5,76 +5,68 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;" wire:click.prevent="openFolder(null)"> {{ auth()->user()->name }} </a>
+                        </li>
                         @foreach($breadcrumbs as $folder)
-                        <li class="breadcrumb-item"><a href="javascript:;" wire:click.prevent="openFolder({{ $folder->id }})" >{{ $folder->name }}</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;" wire:click.prevent="openFolder({{ $folder->id }})">{{ $folder->name }}</a>
+                        </li>
                         @endforeach
                     </ol>
                 </div>
                 <h4 class="page-title">{{ __('Documents') }}</h4>
                 @if (session()->has('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
                 @if (session()->has('error'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
             </div>            
         </div>
     </div>
-    <div class="d-flex" x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal') }">
-        <!-- Боковая панель с деревом папок -->
-        <div class="folder-tree border-end" style="width: 22em; min-height: 100vh; padding: 15px;">
-            {{-- <h5>Структура папок</h5> --}}
-            <ul class="list-unstyled">
-                <li class="mb-1" style=" padding-left: 0px;">
-                    <a href="javascript:;" wire:click.prevent="openFolder(null)" class="text-decoration-none">
-                        <i class="bi bi-folder-fill text-warning"></i> Корневая папка
-                        <span class="badge bg-primary rounded-pill">{{ App\Models\Document::where('folder', null)->count() }}</span>
-                    </a>
-                </li>
-                @foreach($folderTree as $treeFolder)
-                    <li class="mb-1" style="margin-left: {{ $treeFolder->level * 20 }}px">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="javascript:;" 
-                               wire:click.prevent="openFolder({{ $treeFolder->id }})"
-                               class="text-decoration-none {{ $currentFolder == $treeFolder->id ? 'fw-bold' : '' }}">
-                                <i class="bi bi-folder{{ $currentFolder == $treeFolder->id ? '-fill' : '' }} text-warning"></i>
-                                {{ $treeFolder->name }}
-                                <span class="badge bg-primary rounded-pill">{{ $treeFolder->documents_count }}</span>
-                            </a>
-                            <div>
-                                <button wire:click="confirmFolderRename({{ $treeFolder->id }})" 
-                                        class="btn btn-sm btn-primary ms-2">
+    <div x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal'), showCreateModal: @entangle('showCreateModal') }">
+        <div class="p-3">
+            <button class="btn btn-primary mb-3" wire:click="$set('showCreateModal', true)">
+                <i class="bi bi-folder-plus"></i> Создать папку
+            </button>
+
+            <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary mb-3 ms-2">
+                <i class="bi bi-upload"></i> Загрузить документ
+            </a>
+
+            <div class="row">
+                <!-- Отображение папок -->
+                @foreach ($folders as $folder)
+                    <div class="col-md-3 my-3">
+                        <div class="card text-center p-3">
+                            <div class="card-content">
+                                <a href="javascript:;" wire:click.prevent="openFolder({{ $folder->id }})" class="text-decoration-none">
+                                    <i class="bi bi-folder-fill text-warning" style="font-size: 2rem;"></i>
+                                    <p class="mt-2 mb-0">{{ $folder->name }}</p>
+                                    <span class="badge bg-primary rounded-pill">{{ $folder->documents_count }}</span>
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-center mt-2">
+                                <button wire:click="confirmFolderRename({{ $folder->id }})" 
+                                        class="btn btn-sm btn-primary me-1">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <button wire:click="confirmFolderDelete({{ $treeFolder->id }})" 
-                                        class="btn btn-sm btn-danger ms-2">
+                                <button wire:click="confirmFolderDelete({{ $folder->id }})" 
+                                        class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 @endforeach
-            </ul>
-        </div>
-    
-        <!-- Основное содержимое -->
-        <div class="flex-grow-1 p-3">
-            <h3>Файловый менеджер</h3>           
-    
-            <!-- Форма создания папки -->
-            <form wire:submit.prevent="createFolder" class="mb-3">
-                <input type="text" wire:model="newFolderName" class="form-control" placeholder="Имя папки">
-                <button type="submit" class="btn btn-primary mt-2">Создать папку</button>
-            </form>
-    
-            <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary mt-2">Загрузить документ</a>
-    
-            <div class="row">
-    
+
                 <!-- Отображение файлов -->
                 @foreach ($files as $file)
                     <div class="col-md-3 my-3">
@@ -84,16 +76,53 @@
                                 <a href="{{ $file->file_url }}" target="_blank">{{ $file->file }}</a>
                             </p>
                             <div class="d-flex justify-content-center">
-                                <a href="{{ asset($file->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1"><i class="bi bi-pencil"></i></a>
-                                <button wire:click="delete({{ $file->id }})" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                <a href="{{ asset($file->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button wire:click="delete({{ $file->id }})" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </div>
                         </div>                    
                     </div>
                 @endforeach
             </div>
         </div>
-    
+
+        <!-- Модальное окно создания папки -->
+        <div x-show="showCreateModal" 
+             class="modal fade show" 
+             style="display: block; background-color: rgba(0,0,0,0.5);"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Создание новой папки</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showCreateModal', false)"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newFolderName" class="form-label">Имя папки</label>
+                            <input type="text" 
+                                   class="form-control @error('newFolderName') is-invalid @enderror" 
+                                   id="newFolderName" 
+                                   wire:model="newFolderName">
+                            @error('newFolderName')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showCreateModal', false)">Отмена</button>
+                        <button type="button" class="btn btn-primary" wire:click="createFolder">Создать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Модальное окно подтверждения удаления -->
         <div x-show="showDeleteModal" 
              class="modal fade show" 

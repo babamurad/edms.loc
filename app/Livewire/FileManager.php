@@ -20,6 +20,7 @@ class FileManager extends Component
     public $showRenameModal = false;
     public $folderToRename;
     public $newName;
+    public $showCreateModal = false;
 
     private function getFolderTree($parentId = null, $level = 0)
     {
@@ -48,8 +49,12 @@ class FileManager extends Component
         $currentFolderModel = $this->currentFolder ? Folder::find($this->currentFolder) : null;
         $parentFolder = $currentFolderModel ? $currentFolderModel->parent_id : null;
 
+        // Получаем папки текущего уровня
         $folders = Folder::where('parent_id', '=', $this->currentFolder)->get();
         $folderTree = $this->getFolderTree();
+        
+        // Получаем файлы текущей папки
+        $files = Document::where('folder', $this->currentFolder)->get() ?? collect();
 
         $breadcrumbs = collect();
         $parent = $currentFolderModel;
@@ -60,6 +65,7 @@ class FileManager extends Component
 
         return view('livewire.file-manager', compact(
             'folders', 
+            'files',
             'currentFolderModel', 
             'parentFolder', 
             'breadcrumbs',
@@ -75,11 +81,15 @@ class FileManager extends Component
     public function createFolder()
     {
         $this->validate(['newFolderName' => 'required|string|max:255']);
+        
         Folder::create([
             'name' => $this->newFolderName,
             'parent_id' => $this->currentFolder
         ]);
+        
         $this->newFolderName = '';
+        $this->showCreateModal = false; // закрываем модальное окно после создания
+        session()->flash('success', 'Папка успешно создана');
     }
 
     public function openFolder($folderId)
@@ -98,8 +108,8 @@ class FileManager extends Component
     {
         $folder = Folder::findOrFail($this->folderToDelete);
         
-        // Проверяем, есть ли в папке документы или подпапки
-        if ($folder->documents()->count() > 0 || $folder->children()->count() > 0) {
+        // Заменяем children() на subfolders()
+        if ($folder->documents()->count() > 0 || $folder->subfolders()->count() > 0) {
             session()->flash('error', 'Невозможно удалить папку, содержащую файлы или подпапки');
             $this->showDeleteModal = false;
             return;
