@@ -10,16 +10,7 @@
                 </ol>
             </div>
             <h4 class="page-title">{{ __('Categories') }}</h4>
-            @if (session()->has('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
+            @include('livewire.partials.alerts')
         </div>
     </div>
     <div class="card">
