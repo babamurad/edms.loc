@@ -13,6 +13,7 @@ use App\Livewire\Documents\DocumentsUpload;
 use App\Livewire\Documents\DocumentsView;
 use App\Livewire\RoleManager;
 use App\Livewire\FileManager;
+use App\Livewire\UserManager;
 use App\Livewire\HomeComponent;
 use App\Livewire\User\Login;
 use App\Livewire\User\Register;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function (){
     Route::get('documents/upload/{folder?}', DocumentsUpload::class)->name('documents.upload');
 
     Route::get('role-manager', RoleManager::class)->name('role-manager');
+    Route::get('user-manager', UserManager::class)->name('user-manager');
 });
 
 // Route::get('/admin', AdminController::class)->middleware('role:admin');

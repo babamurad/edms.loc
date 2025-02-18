@@ -12,6 +12,7 @@ class RoleManager extends Component
     public $selectedUser = null;
     public $selectedRole = null;
     public $userOptions = [];
+    public $userRoles = [];
 
     public function mount()
     {
@@ -32,6 +33,19 @@ class RoleManager extends Component
     public function updateSelectedUser($value)
     {
         $this->selectedUser = $value;
+        $this->loadUserRoles();
+    }
+
+    public function loadUserRoles()
+    {
+        if ($this->selectedUser) {
+            $user = User::find($this->selectedUser);
+            if ($user) {
+                $this->userRoles = $user->roles()->get();
+            }
+        } else {
+            $this->userRoles = [];
+        }
     }
 
     public function assignRole()
@@ -47,8 +61,34 @@ class RoleManager extends Component
             return;
         }
 
+        // Проверяем, есть ли уже такая роль у пользователя
+        if ($user->roles()->where('role_id', $this->selectedRole)->exists()) {
+            session()->flash('error', 'Эта роль уже назначена пользователю');
+            return;
+        }
+
         $user->roles()->syncWithoutDetaching([$this->selectedRole]);
+        $this->loadUserRoles();
+        $this->selectedRole = null;
         session()->flash('success', 'Роль успешно назначена');
+    }
+
+    public function removeRole($roleId)
+    {
+        if (!$this->selectedUser) {
+            session()->flash('error', 'Пользователь не выбран');
+            return;
+        }
+
+        $user = User::find($this->selectedUser);
+        if (!$user) {
+            session()->flash('error', 'Пользователь не найден');
+            return;
+        }
+
+        $user->roles()->detach($roleId);
+        $this->loadUserRoles();
+        session()->flash('success', 'Роль успешно удалена');
     }
 
     public function render()

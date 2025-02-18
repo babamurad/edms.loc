@@ -54,8 +54,14 @@
             </li>
             <li class="side-nav-item">
                 <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
-                    <i class="ri-file-list-fill"></i>
+                    <i class="ri-user-settings-fill"></i>
                     <span> {{ __('Roles Manager') }} </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('user-manager') }}" class="side-nav-link {{ request()->is('user-manager') ? 'active' : '' }}">
+                    <i class="ri-team-fill"></i>
+                    <span> {{ __('User Manager') }} </span>
                 </a>
             </li>
 
