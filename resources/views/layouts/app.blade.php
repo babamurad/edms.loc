@@ -15,17 +15,22 @@
 {{--        <link rel="stylesheet" href="{{ asset('assets/vendor/daterangepicker/daterangepicker.css') }}">--}}
 
         <!-- Vector Map css -->
-{{--        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">--}}
+{{--        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">--}}       
 
-        <!-- Theme Config Js -->
-        <script src="{{ asset('assets/js/config.js') }}"></script>
+        @stack('select2-css')
 
         <!-- App css -->
         <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
         <!-- Icons css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+         <!-- Theme Config Js -->
+         <script src="{{ asset('assets/js/config.js') }}"></script>
         @stack('editor')
+        
+        <!-- Vendor js -->
+        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+        
 {{--        <x-head.tinymce-config/>--}}
     </head>
 
@@ -609,9 +614,6 @@
             </div>
         </div>
 
-        <!-- Vendor js -->
-        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
-
         <!-- Daterangepicker js -->
 {{--        <script src="{{ asset('assets/vendor/daterangepicker/moment.min.js') }}"></script>--}}
 {{--        <script src="{{ asset('assets/vendor/daterangepicker/daterangepicker.js') }}"></script>--}}
@@ -630,5 +632,7 @@
         <!-- App js -->
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
         @stack('summernote')
+        @stack('select2-js')
+        
     </body>
 </html>

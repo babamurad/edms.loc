@@ -11,6 +11,7 @@ use App\Livewire\Documents\DocumentsEdit;
 use App\Livewire\Documents\DocumentsIndex;
 use App\Livewire\Documents\DocumentsUpload;
 use App\Livewire\Documents\DocumentsView;
+use App\Livewire\Documents\DocumentInbox;
 use App\Livewire\RoleManager;
 use App\Livewire\FileManager;
 use App\Livewire\UserManager\UserManager;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function (){
     Route::get('user-manager', UserManager::class)->name('user-manager');
     Route::get('user/create', UserCreate::class)->name('user.create');
     Route::get('user/{id}/edit', UserEdit::class)->name('user.edit');
+
+    Route::get('documents/inbox', DocumentInbox::class)->name('documents.inbox');
 });
 
 // Route::get('/admin', AdminController::class)->middleware('role:admin');

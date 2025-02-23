@@ -22,7 +22,8 @@
             @endif
         </div>
     </div>
-    <livewire:file-manager />
+        {{-- file-manager --}}
+        <livewire:file-manager />
     <div class="row">
         @foreach ($documents as $doc)
             <div class="col-md-2 mb-3">
@@ -40,7 +41,8 @@
                     <div class="d-flex justify-content-center">
                         <a href="{{ asset($doc->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1"><i class="bi bi-eye"></i></a>
                         <a href="{{ route('documents.edit', ['id' => $doc->id]) }}" class="btn btn-sm btn-info me-1"><i class="bi bi-pencil"></i></a>
-                        <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                        <livewire:document-share :document="$doc" :wire:key="'share-'.$doc->id" />
+                        <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger ms-1"><i class="bi bi-trash"></i></button>
                     </div>
                 </div>
             </div>
@@ -80,9 +82,8 @@
                             <td>{{ $document->slug }}</td>
                             <td>
                                 <a type="button" href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
+                                <livewire:document-share :document="$document" :wire:key="'share-table-'.$document->id" />
                                 <button type="button" class="btn btn-sm btn-danger" style="float: none;"
-                                        {{--                                        data-bs-toggle="modal" data-bs-target="#ConfirmDelete" --}}
-
                                         @click="showModal = true, delId={{ $document->id }}">
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
@@ -132,5 +133,6 @@
             </div>
         </div>
     </div>
+
 
 </div>

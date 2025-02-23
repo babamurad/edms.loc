@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Department;
 use App\Models\Document;
+use App\Models\DocumentShare as DocumentShareModel;
 use App\Models\Folder;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -24,6 +26,11 @@ class FileManager extends Component
     public $showCreateModal = false;
     public $showFileDeleteModal = false;
     public $fileToDelete;
+
+    public $document;  
+    public $showModal = false;
+    public $selectedUsers = [];
+    public $message;
 
     private function getFolderTree($parentId = null, $level = 0)
     {
@@ -49,6 +56,11 @@ class FileManager extends Component
 
     public function render()
     {
+        $departments = Department::with(['users' => function($query) {
+            $query->where('active', true)
+                  ->where('id', '!=', auth()->id());
+        }])->get();
+        
         $currentFolderModel = $this->currentFolder ? Folder::find($this->currentFolder) : null;
         $parentFolder = $currentFolderModel ? $currentFolderModel->parent_id : null;
 
@@ -72,7 +84,8 @@ class FileManager extends Component
             'currentFolderModel', 
             'parentFolder', 
             'breadcrumbs',
-            'folderTree'
+            'folderTree',
+            'departments'
         ));
     }
 

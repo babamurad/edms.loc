@@ -1,4 +1,17 @@
-<div>
+@push('select2-css')
+    <!-- Select2 css -->
+    <link href="{{  asset('assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />    
+@endpush
+
+@push('select2-js')
+<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+@endpush
+<div> 
     <div class="row">
         <x-slot name="title">{{ __('Documents') }}</x-slot>
         <div class="col-12">
@@ -63,7 +76,7 @@
                                 <button wire:click="confirmFolderRename({{ $folder->id }})" 
                                         class="btn btn-sm btn-primary me-1">
                                     <i class="bi bi-pencil"></i>
-                                </button>
+                                </button>                                
                                 <button wire:click="confirmFolderDelete({{ $folder->id }})" 
                                         class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i>
@@ -88,6 +101,9 @@
                                 <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
                                     <i class="bi bi-pencil"></i>
                                 </a>
+                                <button type="button" class="btn btn-sm btn-primary me-1" wire:click="$set('showModal', true)">
+                                    <i class="bi bi-share"></i> 
+                                </button>
                                 <button wire:click="confirmFileDelete({{ $file->id }})" class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -97,6 +113,45 @@
                 @endforeach
             </div>
         </div>
+
+    @if($showModal)
+    {{-- <div class="modal-backdrop fade show"></div> --}}
+    <div wire:ignore class="modal show" style="display: block; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share Document</h5>
+                    <button type="button" class="btn-close" wire:click="$set('showModal', false)"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Select Recipients </label>
+                        <select class="select2 form-select select2-multiple select2-hidden-accessible" multiple wire:model="selectedUsers" style="height: 12rem;" data-toggle="select2" multiple="" data-placeholder="Choose ..." data-select2-id="select2-data-4-jq4y" tabindex="-1" aria-hidden="true">
+                            @foreach($departments as $department)
+                                @if($department->users->count() > 0)
+                                    <optgroup label="{{ $department->title }}">
+                                        @foreach($department->users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('selectedUsers') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message (optional)</label>
+                        <textarea class="form-control" wire:model="message" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">Close</button>
+                    <button type="button" class="btn btn-primary" wire:click="shareDocument">Share</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
         <!-- Модальное окно создания папки -->
         <div x-show="showCreateModal" 
@@ -204,5 +259,6 @@
             </div>
         </div>
     </div>
+
 </div>
 

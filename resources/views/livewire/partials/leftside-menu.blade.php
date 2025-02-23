@@ -53,6 +53,21 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="{{ route('documents.inbox') }}" class="side-nav-link">
+                    <i class="bi bi-inbox"></i>
+                    <span>Inbox</span>
+                    @php
+                        $unreadCount = \App\Models\DocumentShare::where('recipient_id', auth()->id())
+                            ->whereNull('read_at')
+                            ->count();
+                    @endphp
+                    @if($unreadCount > 0)
+                        <span class="badge bg-danger rounded-pill">{{ $unreadCount }}</span>
+                    @endif
+                </a>
+            </li>
+
+            <li class="side-nav-item">
                 <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
                     <i class="ri-user-settings-fill"></i>
                     <span> {{ __('Roles Manager') }} </span>
