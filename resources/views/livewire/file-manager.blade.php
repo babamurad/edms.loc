@@ -17,34 +17,39 @@
 
         window.addEventListener('showModal', event=> {
             setTimeout(() => {
-                // initSelect2();
-                $('.share-select').select2();    
+                initSelect2();
+                // $('.share-select').select2();    
             }, 100);
-        })
+        });
 
         function initSelect2() {
-            $('.share-select').each(function() {
-                if ($(this).hasClass("select2-hidden-accessible")) {
-                    $(this).select2('destroy');
-                }
-                
-                $(this).select2({
-                    theme: 'bootstrap-5',
-                    width: '100%',
-                    dropdownParent: $(this).closest('.modal-content'),
-                    language: {
-                        searching: function() {
-                            return "Поиск...";
-                        },
-                        noResults: function() {
-                            return "Результатов не найдено";
-                        }
+            let select = $('#share-select');
+
+            $('#share-select').on("change", function (e) { console.log("change"); });            
+            
+            if (select.hasClass("select2-hidden-accessible")) {
+                select.select2('destroy');
+            }
+            
+            select.select2({
+                // theme: 'bootstrap-5',
+                width: '100%',
+                dropdownParent: select.closest('.modal-content'),
+                language: {
+                    searching: function() {
+                        return "Поиск...";
                     },
-                    placeholder: 'Выберите получателей',
-                    allowClear: true
-                }).on('change', function(e) {
-                    @this.set('selectedUsers', $(this).val());
-                });
+                    noResults: function() {
+                        return "Результатов не найдено";
+                    }
+                },
+                placeholder: 'Выберите получателей',
+                allowClear: true
+            }).on('select2:select select2:unselect', function(e) {
+                let data = select.val();
+                //var data = e.params.data;
+                //console.log(data);
+                @this.set('selectedUsers', data || []);                
             });
         }
     </script>
@@ -168,11 +173,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3" wire:ignore>
-                        <label class="form-label">Select Recipients</label>
-                        <select class="form-control share-select" multiple>
+                        <label class="form-label">Выберите получателей</label>
+                        <select class="form-control share-select @error('selectedUsers') is-invalid @enderror" 
+                                multiple 
+                                wire:model="selectedUsers"
+                                id="share-select">
                             @foreach($departments as $department)
                                 @if($department->users->count() > 0)                                
-                                    <optgroup label="Dep:{{ $department->title }}">
+                                    <optgroup label="{{ $department->title }}">
                                         @foreach($department->users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -181,9 +189,24 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('selectedUsers')
+                        <div class="invalid-feedback d-block mb-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
                     <div class="mb-3">
-                        <label class="form-label">Message (optional)</label>
-                        <textarea class="form-control" wire:model="message" rows="3"></textarea>
+                        <label class="form-label">Сообщение (необязательно)</label>
+                        <textarea 
+                            class="form-control @error('message') is-invalid @enderror" 
+                            wire:model="message" 
+                            rows="3"
+                            placeholder="Введите сообщение для получателей"></textarea>
+                        @error('message')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

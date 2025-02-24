@@ -32,6 +32,18 @@ class FileManager extends Component
     public $message;
     public $showModal = false;
 
+    protected $rules = [
+        'selectedUsers' => 'required|array|min:1',
+        'message' => 'nullable|string|max:500'
+    ];
+
+    protected $messages = [
+        'selectedUsers.required' => 'Пожалуйста, выберите получателей',
+        'selectedUsers.array' => 'Некорректный формат получателей',
+        'selectedUsers.min' => 'Выберите хотя бы одного получателя',
+        'message.max' => 'Сообщение не должно превышать 500 символов'
+    ];
+
     private function getFolderTree($parentId = null, $level = 0)
     {
         // Используем withCount для подсчета документов
@@ -192,16 +204,14 @@ class FileManager extends Component
     public function openShareModal($fileId)
     {
         $this->selectedFileId = $fileId;
+        $this->reset(['selectedUsers', 'message']);
         $this->showModal = true;
         $this->dispatch('showModal');
     }
 
     public function shareDocument()
-    {
-        $this->validate([
-            'selectedUsers' => 'required|array|min:1',
-            'message' => 'nullable|string'
-        ]);
+    {        
+        $this->validate();
 
         foreach ($this->selectedUsers as $userId) {
             DocumentShareModel::create([
@@ -215,6 +225,6 @@ class FileManager extends Component
 
         $this->reset(['selectedUsers', 'message']);
         $this->showModal = false;
-        session()->flash('success', 'Document shared successfully');
+        session()->flash('success', 'Документ успешно отправлен');
     }
 }
