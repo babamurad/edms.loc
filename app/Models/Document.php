@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\DocumentShare;
 
 class Document extends Model
 {
@@ -21,6 +23,28 @@ class Document extends Model
     public function getFileUrlAttribute()
     {
         return 'storage/public/documents/' . auth()->user()->name . '/' . $this->file;
+    }
+
+    public function getReceivedFileUrlAttribute()
+    {
+        // Получаем отправителя из связанной записи DocumentShare
+        $documentShare = $this->documentShares()->where('document_id', $this->id)->first();
+        if (!$documentShare) {
+            return null;
+        }
+
+        $sender = User::find($documentShare->sender_id);
+        if (!$sender) {
+            return null;
+        }
+
+        return 'storage/public/documents/' . $sender->name . '/' . $this->file;
+    }
+
+    // Добавьте отношение к DocumentShare
+    public function documentShares()
+    {
+        return $this->hasMany(DocumentShare::class);
     }
 
     /**

@@ -49,20 +49,20 @@
                             <!-- Logo light -->
                             <a href="index.html" class="logo-light">
                                 <span class="logo-lg">
-                                    <img src="assets/images/logo.png" alt="logo">
+                                    <img src="{{ asset('assets/images/logo.png"')}}" alt="logo">
                                 </span>
                                 <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.png" alt="small logo">
+                                    <img src="{{ asset('assets/images/logo-sm.png')}}"" alt="small logo">
                                 </span>
                             </a>
 
                             <!-- Logo Dark -->
                             <a href="index.html" class="logo-dark">
                                 <span class="logo-lg">
-                                    <img src="assets/images/logo-dark.png" alt="dark logo">
+                                    <img src="{{ asset('assets/images/logo-dark.png')}}"" alt="dark logo">
                                 </span>
                                 <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.png" alt="small logo">
+                                    <img src="{{ asset('assets/images/logo-sm.png')}}"" alt="small logo">
                                 </span>
                             </a>
                         </div>
@@ -117,25 +117,25 @@
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span
+                                    <img src="{{ asset('assets/images/flags/germany.jpg') }}" alt="user-image" class="me-1" height="12"> <span
                                         class="align-middle">German</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span
+                                    <img src="{{ asset('assets/images/flags/italy.jpg') }}" alt="user-image" class="me-1" height="12"> <span
                                         class="align-middle">Italian</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span
+                                    <img src="{{ asset('assets/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span
                                         class="align-middle">Spanish</span>
                                 </a>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span
+                                    <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span
                                         class="align-middle">Russian</span>
                                 </a>
 
