@@ -17,8 +17,8 @@
         <!-- Vector Map css -->
 {{--        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">--}}       
 
-        @stack('select2-css')
-
+        
+@stack('select2-css')
         <!-- App css -->
         <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
@@ -31,7 +31,7 @@
         <!-- Vendor js -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
         
-{{--        <x-head.tinymce-config/>--}}
+
     </head>
 
     <body>
@@ -618,21 +618,20 @@
 {{--        <script src="{{ asset('assets/vendor/daterangepicker/moment.min.js') }}"></script>--}}
 {{--        <script src="{{ asset('assets/vendor/daterangepicker/daterangepicker.js') }}"></script>--}}
 
-        <!-- Apex Charts js -->
-        <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+        @stack('apex-chart')
 
         <!-- Vector Map js -->
 {{--        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>--}}
 {{--        <script src="{{ asset('assets/vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"></script>--}}
 
-        <!-- Dashboard App js -->
-        <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+        
 
 
         <!-- App js -->
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
         @stack('summernote')
         @stack('select2-js')
+        @stack('scripts')
         
     </body>
 </html>

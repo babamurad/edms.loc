@@ -27,10 +27,10 @@ class FileManager extends Component
     public $showFileDeleteModal = false;
     public $fileToDelete;
 
-    public $document;  
-    public $showModal = false;
+    public $selectedFileId = null;
     public $selectedUsers = [];
     public $message;
+    public $showModal = false;
 
     private function getFolderTree($parentId = null, $level = 0)
     {
@@ -187,5 +187,34 @@ class FileManager extends Component
         
         // Обновляем список файлов
         $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
+    }
+
+    public function openShareModal($fileId)
+    {
+        $this->selectedFileId = $fileId;
+        $this->showModal = true;
+        $this->dispatch('showModal');
+    }
+
+    public function shareDocument()
+    {
+        $this->validate([
+            'selectedUsers' => 'required|array|min:1',
+            'message' => 'nullable|string'
+        ]);
+
+        foreach ($this->selectedUsers as $userId) {
+            DocumentShareModel::create([
+                'document_id' => $this->selectedFileId,
+                'sender_id' => auth()->id(),
+                'recipient_id' => $userId,
+                'status_id' => 1,
+                'message' => $this->message
+            ]);
+        }
+
+        $this->reset(['selectedUsers', 'message']);
+        $this->showModal = false;
+        session()->flash('success', 'Document shared successfully');
     }
 }

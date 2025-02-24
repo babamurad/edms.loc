@@ -1,15 +1,53 @@
 @push('select2-css')
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <!-- Select2 css -->
-    <link href="{{  asset('assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />    
+    <link href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" /> --}}
 @endpush
 
 @push('select2-js')
-<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $('.select2').select2();
-    });
-</script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
+        <!--  Select2 Plugin Js -->
+    <script src="{{ asset('assets/vendor/select2/js/select2.min.js') }}"></script>
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            initSelect2();
+        });
+
+        window.addEventListener('showModal', event=> {
+            setTimeout(() => {
+                // initSelect2();
+                $('.share-select').select2();    
+            }, 100);
+        })
+
+        function initSelect2() {
+            $('.share-select').each(function() {
+                if ($(this).hasClass("select2-hidden-accessible")) {
+                    $(this).select2('destroy');
+                }
+                
+                $(this).select2({
+                    theme: 'bootstrap-5',
+                    width: '100%',
+                    dropdownParent: $(this).closest('.modal-content'),
+                    language: {
+                        searching: function() {
+                            return "Поиск...";
+                        },
+                        noResults: function() {
+                            return "Результатов не найдено";
+                        }
+                    },
+                    placeholder: 'Выберите получателей',
+                    allowClear: true
+                }).on('change', function(e) {
+                    @this.set('selectedUsers', $(this).val());
+                });
+            });
+        }
+    </script>
 @endpush
 <div> 
     <div class="row">
@@ -101,7 +139,7 @@
                                 <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-primary me-1" wire:click="$set('showModal', true)">
+                                <button type="button" class="btn btn-sm btn-primary me-1" wire:click="openShareModal({{ $file->id }})">
                                     <i class="bi bi-share"></i> 
                                 </button>
                                 <button wire:click="confirmFileDelete({{ $file->id }})" class="btn btn-sm btn-danger">
@@ -112,11 +150,16 @@
                     </div>
                 @endforeach
             </div>
+            
+            {{-- <select class="select2" name="states[]" multiple="multiple">
+                <option value="AL">Alabama</option>
+                <option value="WY">Wyoming</option>
+              </select> --}}
+
         </div>
 
     @if($showModal)
-    {{-- <div class="modal-backdrop fade show"></div> --}}
-    <div wire:ignore class="modal show" style="display: block; background-color: rgba(0,0,0,0.5);">
+    <div class="modal show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,12 +167,12 @@
                     <button type="button" class="btn-close" wire:click="$set('showModal', false)"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Select Recipients </label>
-                        <select class="select2 form-select select2-multiple select2-hidden-accessible" multiple wire:model="selectedUsers" style="height: 12rem;" data-toggle="select2" multiple="" data-placeholder="Choose ..." data-select2-id="select2-data-4-jq4y" tabindex="-1" aria-hidden="true">
+                    <div class="mb-3" wire:ignore>
+                        <label class="form-label">Select Recipients</label>
+                        <select class="form-control share-select" multiple>
                             @foreach($departments as $department)
-                                @if($department->users->count() > 0)
-                                    <optgroup label="{{ $department->title }}">
+                                @if($department->users->count() > 0)                                
+                                    <optgroup label="Dep:{{ $department->title }}">
                                         @foreach($department->users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -137,7 +180,6 @@
                                 @endif
                             @endforeach
                         </select>
-                        @error('selectedUsers') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Message (optional)</label>
@@ -151,6 +193,7 @@
             </div>
         </div>
     </div>
+
     @endif
 
         <!-- Модальное окно создания папки -->
