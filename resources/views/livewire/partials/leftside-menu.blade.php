@@ -67,6 +67,7 @@
                 </a>
             </li>
 
+            @if(auth()->user()->hasRole('admin'))
             <li class="side-nav-item">
                 <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
                     <i class="ri-user-settings-fill"></i>
@@ -79,6 +80,7 @@
                     <span> {{ __('User Manager') }} </span>
                 </a>
             </li>
+            @endif            
 
         </ul>
         <!--- End Sidemenu -->

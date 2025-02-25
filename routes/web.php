@@ -40,13 +40,15 @@ Route::middleware('auth')->group(function (){
     Route::get('documents/{id}/view',DocumentsView::class)->name('documents.view');
     Route::get('documents/upload/{folder?}', DocumentsUpload::class)->name('documents.upload');
 
+    Route::get('documents/inbox', DocumentInbox::class)->name('documents.inbox');
+});
+
+Route::group(['middleware' => ['role:admin']], function () {
     Route::get('role-manager', RoleManager::class)->name('role-manager');
 
     Route::get('user-manager', UserManager::class)->name('user-manager');
     Route::get('user/create', UserCreate::class)->name('user.create');
     Route::get('user/{id}/edit', UserEdit::class)->name('user.edit');
-
-    Route::get('documents/inbox', DocumentInbox::class)->name('documents.inbox');
 });
 
 // Route::get('/admin', AdminController::class)->middleware('role:admin');
@@ -57,6 +59,6 @@ Route::middleware('guest')->group(function (){
     Route::get('login', Login::class)->name('login');
 });
 
-
+date_default_timezone_set("Asia/Ashgabat");
 
 
