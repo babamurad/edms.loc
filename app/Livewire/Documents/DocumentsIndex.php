@@ -17,7 +17,12 @@ class DocumentsIndex extends Component
 
     public function render()
     {
-        $documents = Document::paginate(5);
+        if(auth()->user()->hasRole('admin')){
+            $documents = Document::paginate(5);
+        } else {
+            $documents = Document::where('user_id', auth()->user()->id)->paginate(5);
+        } 
+        dd($documents);                                                  
         return view('livewire.documents.documents-index', compact('documents'));
     }
 }
