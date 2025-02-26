@@ -14,7 +14,7 @@ class FileManager extends Component
 {
     use WithFileUploads;
 
-    public $file;
+    public $file = 'fileName';
     public $currentFolder = null;
     public $newFolderName;
     public $files = [];
@@ -31,6 +31,9 @@ class FileManager extends Component
     public $selectedUsers = [];
     public $message;
     public $showModal = false;
+
+    public $show = false;
+    public $content = '';
 
     protected $rules = [
         'selectedUsers' => 'required|array|min:1',

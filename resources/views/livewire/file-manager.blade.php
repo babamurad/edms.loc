@@ -164,7 +164,7 @@
         </div>
 
     @if($showModal)
-    <div class="modal show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+    <div wire:cloak class="modal show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -220,7 +220,7 @@
     @endif
 
         <!-- Модальное окно создания папки -->
-        <div x-show="showCreateModal" 
+        <div wire:cloak x-show="showCreateModal" 
              class="modal fade show" 
              style="display: block; background-color: rgba(0,0,0,0.5);"
              tabindex="-1">
@@ -251,7 +251,7 @@
         </div>
 
         <!-- Модальное окно подтверждения удаления -->
-        <div x-show="showDeleteModal" 
+        <div wire:cloak x-show="showDeleteModal" 
              class="modal fade show" 
              style="display: block; background-color: rgba(0,0,0,0.5);"
              tabindex="-1">
@@ -273,7 +273,7 @@
         </div>
 
         <!-- Модальное окно переименования -->
-        <div x-show="showRenameModal" 
+        <div wire:cloak x-show="showRenameModal" 
              class="modal fade show" 
              style="display: block; background-color: rgba(0,0,0,0.5);"
              tabindex="-1">
@@ -304,7 +304,7 @@
         </div>
 
         <!-- Модальное окно подтверждения удаления файла -->
-        <div x-show="showFileDeleteModal" 
+        <div wire:cloak x-show="showFileDeleteModal" 
              class="modal fade show" 
              style="display: block; background-color: rgba(0,0,0,0.5);"
              tabindex="-1">
