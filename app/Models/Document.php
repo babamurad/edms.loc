@@ -70,4 +70,44 @@ class Document extends Model
             default => 'bi-file-earmark',
         };
     }
+
+    /**
+     * Связь с пользователем (автором документа)
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Альтернативное название для связи с пользователем
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Связь с категорией
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Связь с отделом
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    /**
+     * Связь с папкой
+     */
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class, 'folder');
+    }
 }

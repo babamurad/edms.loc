@@ -151,6 +151,9 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
+                            <div class="mt-1">
+                                <span class="badge bg-purple-subtle text-purple">Author: <b>{{ $file->author->name }}</b></span>
+                            </div>
                         </div>                    
                     </div>
                 @endforeach

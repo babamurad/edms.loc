@@ -82,9 +82,9 @@ class FileManager extends Component
         // Получаем папки текущего уровня
         $folders = Folder::where('parent_id', '=', $this->currentFolder)->get();
         $folderTree = $this->getFolderTree();
-        
-        // Получаем файлы текущей папки
-        $files = Document::where('folder', $this->currentFolder)->get() ?? collect();
+
+       
+        //dd($files);
 
         $breadcrumbs = collect();
         $parent = $currentFolderModel;
@@ -95,7 +95,7 @@ class FileManager extends Component
 
         return view('livewire.file-manager', compact(
             'folders', 
-            'files',
+            // 'files',
             'currentFolderModel', 
             'parentFolder', 
             'breadcrumbs',
@@ -106,7 +106,13 @@ class FileManager extends Component
 
     public function mount()
     {
-        $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
+        // $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
+         // Получаем файлы текущей папки, текущего пользователя для обычных и всех для админа
+         if(auth()->user()->hasRole('admin')){
+            $this->files = Document::where('folder', $this->currentFolder)->with('author')->get() ?? collect();
+        } else {
+            $this->files = Document::where(['user_id' => auth()->user()->id, 'folder' => $this->currentFolder])->with('author')->get() ?? collect();
+        }
     }
 
     public function createFolder()
@@ -126,7 +132,11 @@ class FileManager extends Component
     public function openFolder($folderId)
     {
         $this->currentFolder = $folderId === 'null' ? null : $folderId;
-        $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
+        if(auth()->user()->hasRole('admin')){
+            $this->files = Document::where('folder', $this->currentFolder)->with('author')->get() ?? collect();
+        } else {
+            $this->files = Document::where(['user_id' => auth()->user()->id, 'folder' => $this->currentFolder])->with('author')->get() ?? collect();
+        }
     }
 
     public function confirmFolderDelete($folderId)
