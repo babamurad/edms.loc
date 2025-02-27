@@ -8,11 +8,13 @@ use App\Models\DocumentShare as DocumentShareModel;
 use App\Models\Folder;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\Storage;
 
 class FileManager extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     public $file = 'fileName';
     public $currentFolder = null;
@@ -37,7 +39,9 @@ class FileManager extends Component
 
     public $showAllFiles = false; // новое свойство для отслеживания состояния
     protected $queryString = ['showAllFiles'];
-    
+    protected $paginationTheme = 'bootstrap';
+    public $perPage = 12; // количество документов на странице
+
     protected $rules = [
         'selectedUsers' => 'required|array|min:1',
         'message' => 'nullable|string|max:500'
@@ -71,6 +75,20 @@ class FileManager extends Component
         foreach ($folders as $folder) {
             $folder->level = $level;
             $tree[] = $folder;
+
+            // Получаем документы для текущей папки
+            $documents = Document::where('folder', $folder->id)
+                ->when(!auth()->user()->hasRole('admin'), function($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->get();
+
+            foreach ($documents as $document) {
+                $document->level = $level + 1;
+                $document->is_file = true;
+                $tree[] = $document;
+            }
+
             $tree = array_merge($tree, $this->getFolderTree($folder->id, $level + 1));
         }
         
@@ -79,40 +97,17 @@ class FileManager extends Component
 
     public function render()
     {
-        $departments = Department::with(['users' => function($query) {
-            $query->where('active', true)
-                  ->where('id', '!=', auth()->id());
-        }])->get();
-        
-        $currentFolderModel = $this->currentFolder ? Folder::find($this->currentFolder) : null;
-        $parentFolder = $currentFolderModel ? $currentFolderModel->parent_id : null;
-
-        // Получаем папки текущего уровня
-        $query = Folder::where('parent_id', $this->currentFolder);
-        
-        // Если пользователь не админ, показываем только его папки
-        if (!auth()->user()->hasRole('admin')) {
-            $query->where('user_id', auth()->id());
-        }
-
-        $folders = $query->get();
+        $documents = $this->getDocuments();
         $folderTree = $this->getFolderTree();
-
-        $breadcrumbs = collect();
-        $parent = $currentFolderModel;
-        while ($parent) {
-            $breadcrumbs->prepend($parent);
-            $parent = $parent->parent;
-        }
-
-        return view('livewire.file-manager', compact(
-            'folders', 
-            'currentFolderModel', 
-            'parentFolder', 
-            'breadcrumbs',
-            'folderTree',
-            'departments'
-        ));
+        
+        return view('livewire.file-manager', [
+            'folders' => Folder::where('parent_id', $this->currentFolder)->get(),
+            'documents' => $documents,
+            'currentFolderModel' => $this->currentFolder ? Folder::find($this->currentFolder) : null,
+            'breadcrumbs' => $this->getBreadcrumbs(),
+            'departments' => $this->getDepartments(),
+            'folderTree' => $folderTree
+        ]);
     }
 
     public function mount()
@@ -249,6 +244,11 @@ class FileManager extends Component
 
     public function updatedShowAllFiles()
     {
+        $this->resetPage(); // сброс страницы при переключении режима
+    }
+
+    private function getDocuments()
+    {
         if ($this->showAllFiles) {
             // Показываем все файлы без учета папок
             $query = Document::with(['author', 'folderModel']);
@@ -256,8 +256,6 @@ class FileManager extends Component
             if (!auth()->user()->hasRole('admin')) {
                 $query->where('user_id', auth()->id());
             }
-            
-            $this->files = $query->get();
         } else {
             // Показываем файлы текущей папки
             $query = Document::where('folder', $this->currentFolder)
@@ -266,8 +264,35 @@ class FileManager extends Component
             if (!auth()->user()->hasRole('admin')) {
                 $query->where('user_id', auth()->id());
             }
-            
-            $this->files = $query->get();
         }
+
+        return $query->orderBy('created_at', 'desc')
+                    ->paginate($this->perPage);
+    }
+
+    private function getBreadcrumbs()
+    {
+        $breadcrumbs = collect();
+        $currentId = $this->currentFolder;
+        
+        while ($currentId) {
+            $folder = Folder::find($currentId);
+            if ($folder) {
+                $breadcrumbs->prepend($folder);
+                $currentId = $folder->parent_id;
+            } else {
+                break;
+            }
+        }
+        
+        return $breadcrumbs;
+    }
+
+    private function getDepartments()
+    {
+        return Department::with(['users' => function($query) {
+            $query->where('active', true)
+                  ->where('id', '!=', auth()->id());
+        }])->get();
     }
 }

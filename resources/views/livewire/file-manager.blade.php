@@ -114,6 +114,16 @@
                         {{ $showAllFiles ? 'Показать все документы' : 'Показать по папкам' }}
                     </label>
                 </div>
+
+                <div class="d-flex align-items-center">
+                    <label class="me-2">Документов на странице:</label>
+                    <select wire:model.live="perPage" class="form-select form-select-sm" style="width: auto;">
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="48">48</option>
+                        <option value="96">96</option>
+                    </select>
+                </div>
             </div>
 
             <div class="row">
@@ -145,7 +155,7 @@
                 @endif
 
                 <!-- Отображение файлов -->
-                @foreach ($files as $file)
+                @foreach ($documents as $file)
                     <div class="col-md-3 my-3">
                         <div class="card text-center p-3">
                             <i class="bi {{ $file->file_icon }} text-primary" style="font-size: 2rem;"></i>
@@ -349,5 +359,17 @@
         </div>
     </div>
 
+    
+<!-- Пагинация -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $documents->links() }}
 </div>
+
+<!-- Добавим информацию о количестве документов -->
+<div class="text-muted text-center mt-2">
+    Показано {{ $documents->firstItem() ?? 0 }}-{{ $documents->lastItem() ?? 0 }} из {{ $documents->total() }} документов
+</div>
+
+</div>
+
 

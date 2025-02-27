@@ -15,12 +15,46 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
                 <h4 class="header-title">{{ __('Users List') }}</h4>
                 <a href="{{ route('user.create') }}" type="button" class="btn btn-primary">Create</a>
             </div>
         </div>
         <div class="card-body">
+            <!-- Добавляем панель поиска и фильтрации -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input 
+                            wire:model.live="search" 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Search by name or email..."
+                        >
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select wire:model.live="selectedDepartment" class="form-select">
+                        <option value="">All Departments</option>
+                        @foreach($departments as $department)
+                            <option value="{{ $department->id }}">{{ $department->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select wire:model.live="perPage" class="form-select">
+                        <option value="8">8 per page</option>
+                        <option value="15">15 per page</option>
+                        <option value="25">25 per page</option>
+                        <option value="50">50 per page</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Существующая таблица -->
             <div class="table-responsive-sm">
                 <table class="table table-hover table-centered mb-0">
                     <thead>
@@ -66,10 +100,15 @@
                     @endforeach
                     </tbody>
                 </table>
+                
                 @if($users->isEmpty())
-                    <p>No users found.</p>
+                    <div class="text-center py-3">
+                        <p class="text-muted">No users found matching your criteria.</p>
+                    </div>
                 @else
-                    {{ $users->links() }}
+                    <div class="mt-3">
+                        {{ $users->links() }}
+                    </div>
                 @endif
             </div>
         </div>
