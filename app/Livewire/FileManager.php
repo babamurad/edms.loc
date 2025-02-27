@@ -35,6 +35,9 @@ class FileManager extends Component
     public $show = false;
     public $content = '';
 
+    public $showAllFiles = false; // новое свойство для отслеживания состояния
+    protected $queryString = ['showAllFiles'];
+    
     protected $rules = [
         'selectedUsers' => 'required|array|min:1',
         'message' => 'nullable|string|max:500'
@@ -49,14 +52,19 @@ class FileManager extends Component
 
     private function getFolderTree($parentId = null, $level = 0)
     {
-        // Используем withCount для подсчета документов
-        $folders = Folder::withCount([
+        $query = Folder::withCount([
             'documents' => function($query) {
                 $query->whereNotNull('id');
             }
         ])
-        ->where('parent_id', $parentId)
-        ->get();
+        ->where('parent_id', $parentId);
+
+        // Если пользователь не админ, показываем только его папки
+        if (!auth()->user()->hasRole('admin')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        $folders = $query->get();
         
         $tree = [];
         
@@ -80,11 +88,15 @@ class FileManager extends Component
         $parentFolder = $currentFolderModel ? $currentFolderModel->parent_id : null;
 
         // Получаем папки текущего уровня
-        $folders = Folder::where('parent_id', '=', $this->currentFolder)->get();
-        $folderTree = $this->getFolderTree();
+        $query = Folder::where('parent_id', $this->currentFolder);
+        
+        // Если пользователь не админ, показываем только его папки
+        if (!auth()->user()->hasRole('admin')) {
+            $query->where('user_id', auth()->id());
+        }
 
-       
-        //dd($files);
+        $folders = $query->get();
+        $folderTree = $this->getFolderTree();
 
         $breadcrumbs = collect();
         $parent = $currentFolderModel;
@@ -95,7 +107,6 @@ class FileManager extends Component
 
         return view('livewire.file-manager', compact(
             'folders', 
-            // 'files',
             'currentFolderModel', 
             'parentFolder', 
             'breadcrumbs',
@@ -106,13 +117,7 @@ class FileManager extends Component
 
     public function mount()
     {
-        // $this->files = Document::where('folder', $this->currentFolder)->get() ?? collect();
-         // Получаем файлы текущей папки, текущего пользователя для обычных и всех для админа
-         if(auth()->user()->hasRole('admin')){
-            $this->files = Document::where('folder', $this->currentFolder)->with('author')->get() ?? collect();
-        } else {
-            $this->files = Document::where(['user_id' => auth()->user()->id, 'folder' => $this->currentFolder])->with('author')->get() ?? collect();
-        }
+        $this->showAllFiles = (bool) $this->showAllFiles;
     }
 
     public function createFolder()
@@ -121,7 +126,8 @@ class FileManager extends Component
         
         Folder::create([
             'name' => $this->newFolderName,
-            'parent_id' => $this->currentFolder
+            'parent_id' => $this->currentFolder,
+            'user_id' => auth()->user()->id
         ]);
         
         $this->newFolderName = '';
@@ -239,5 +245,29 @@ class FileManager extends Component
         $this->reset(['selectedUsers', 'message']);
         $this->showModal = false;
         session()->flash('success', 'Документ успешно отправлен');
+    }
+
+    public function updatedShowAllFiles()
+    {
+        if ($this->showAllFiles) {
+            // Показываем все файлы без учета папок
+            $query = Document::with(['author', 'folderModel']);
+            
+            if (!auth()->user()->hasRole('admin')) {
+                $query->where('user_id', auth()->id());
+            }
+            
+            $this->files = $query->get();
+        } else {
+            // Показываем файлы текущей папки
+            $query = Document::where('folder', $this->currentFolder)
+                           ->with(['author', 'folderModel']);
+            
+            if (!auth()->user()->hasRole('admin')) {
+                $query->where('user_id', auth()->id());
+            }
+            
+            $this->files = $query->get();
+        }
     }
 }

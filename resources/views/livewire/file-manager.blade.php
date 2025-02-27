@@ -89,45 +89,60 @@
     </div>
     <div x-data="{ showDeleteModal: @entangle('showDeleteModal'), showRenameModal: @entangle('showRenameModal'), showCreateModal: @entangle('showCreateModal'), showFileDeleteModal: @entangle('showFileDeleteModal') }">
         <div class="p-3">
-            <button class="btn btn-primary mb-3" wire:click="$set('showCreateModal', true)">
-                <i class="bi bi-folder-plus"></i> Создать папку
-            </button>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <button class="btn btn-primary" wire:click="$set('showCreateModal', true)">
+                        <i class="bi bi-folder-plus"></i> Создать папку
+                    </button>
 
-            <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary mb-3 ms-2">
-                <i class="bi bi-upload"></i> Загрузить документ
-            </a>
+                    <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary ms-2">
+                        <i class="bi bi-upload"></i> Загрузить документ
+                    </a>
 
-            @if($currentFolder)
-                <button class="btn btn-secondary mb-3 ms-2" wire:click="openFolder('{{ $currentFolderModel?->parent_id ?? 'null' }}')">
-                    <i class="bi bi-arrow-up"></i> Наверх
-                </button>
-            @endif
+                    @if($currentFolder && !$showAllFiles)
+                        <button class="btn btn-secondary ms-2" wire:click="openFolder('{{ $currentFolderModel?->parent_id ?? 'null' }}')">
+                            <i class="bi bi-arrow-up"></i> Наверх
+                        </button>
+                    @endif
+                </div>
+                
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" 
+                           wire:model.live="showAllFiles"
+                           id="viewToggle">
+                    <label class="form-check-label" for="viewToggle">
+                        {{ $showAllFiles ? 'Показать все документы' : 'Показать по папкам' }}
+                    </label>
+                </div>
+            </div>
 
             <div class="row">
-                <!-- Отображение папок -->
-                @foreach ($folders as $folder)
-                    <div class="col-md-3 my-3">
-                        <div class="card text-center p-3">
-                            <div class="card-content">
-                                <a href="javascript:;" wire:click.prevent="openFolder({{ $folder->id }})" class="text-decoration-none">
-                                    <i class="bi bi-folder-fill text-warning" style="font-size: 2rem;"></i>
-                                    <p class="mt-2 mb-0">{{ $folder->name }}</p>
-                                    <span class="badge bg-primary rounded-pill">{{ $folder->documents_count }}</span>
-                                </a>
-                            </div>
-                            <div class="d-flex justify-content-center mt-2">
-                                <button wire:click="confirmFolderRename({{ $folder->id }})" 
-                                        class="btn btn-sm btn-primary me-1">
-                                    <i class="bi bi-pencil"></i>
-                                </button>                                
-                                <button wire:click="confirmFolderDelete({{ $folder->id }})" 
-                                        class="btn btn-sm btn-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                @if(!$showAllFiles)
+                    <!-- Отображение папок -->
+                    @foreach ($folders as $folder)
+                        <div class="col-md-3 my-3">
+                            <div class="card text-center p-3">
+                                <div class="card-content">
+                                    <a href="javascript:;" wire:click.prevent="openFolder({{ $folder->id }})" class="text-decoration-none">
+                                        <i class="bi bi-folder-fill text-warning" style="font-size: 2rem;"></i>
+                                        <p class="mt-2 mb-0">{{ $folder->name }}</p>
+                                        <span class="badge bg-primary rounded-pill">{{ $folder->documents_count }}</span>
+                                    </a>
+                                </div>
+                                <div class="d-flex justify-content-center mt-2">
+                                    <button wire:click="confirmFolderRename({{ $folder->id }})" 
+                                            class="btn btn-sm btn-primary me-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>                                
+                                    <button wire:click="confirmFolderDelete({{ $folder->id }})" 
+                                            class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
 
                 <!-- Отображение файлов -->
                 @foreach ($files as $file)
@@ -137,6 +152,11 @@
                             <p class="mt-2">
                                 <a href="{{ $file->file_url }}" target="_blank">{{ $file->file }}</a>
                             </p>
+                            @if($showAllFiles)
+                                <small class="text-muted mb-2">
+                                    Папка: {{ $file->folder ? $file->folderName : 'Корневая директория' }}
+                                </small>
+                            @endif
                             <div class="d-flex justify-content-center">
                                 <a href="{{ asset($file->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1">
                                     <i class="bi bi-eye"></i>

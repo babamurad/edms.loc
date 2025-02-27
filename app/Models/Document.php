@@ -110,4 +110,15 @@ class Document extends Model
     {
         return $this->belongsTo(Folder::class, 'folder');
     }
+
+    public function folderModel()
+    {
+        return $this->belongsTo(Folder::class, 'folder');
+    }
+
+    // Аксессор для получения имени папки
+    public function getFolderNameAttribute()
+    {
+        return $this->folderModel ? $this->folderModel->name : 'Корневая директория';
+    }
 }

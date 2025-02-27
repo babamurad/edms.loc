@@ -9,7 +9,7 @@ class Folder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'parent_id', 'user_id'];
 
     public function documents()
     {
@@ -24,5 +24,10 @@ class Folder extends Model
     public function parent()
     {
         return $this->belongsTo(Folder::class, 'parent_id');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 }
