@@ -22,7 +22,7 @@ class Document extends Model
      */
     public function getFileUrlAttribute()
     {
-        return 'storage/public/documents/' . auth()->user()->name . '/' . $this->file;
+        return 'storage/public/documents/' . $this->user->name . '/' . $this->file;
     }
 
     public function getReceivedFileUrlAttribute()
