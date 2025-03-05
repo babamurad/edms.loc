@@ -25,17 +25,13 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('dateRangePicker', () => ({
                 init() {
-                    $(this.$refs.daterange).daterangepicker({
-                        startDate: moment().subtract(29, 'days'),
-                        endDate: moment(),
-                        ranges: {
-                            'Сегодня': [moment(), moment()],
-                            'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
-                            'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
-                            'Этот месяц': [moment().startOf('month'), moment().endOf('month')],
-                            'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                        },
+                    // Получаем начальные значения из Livewire компонента
+                    const startDate = @json($dateStart);
+                    const endDate = @json($dateEnd);
+
+                    const pickerConfig = {
+                        autoUpdateInput: false,
+                        opens: 'left',
                         locale: {
                             format: 'DD.MM.YYYY',
                             applyLabel: 'Применить',
@@ -48,29 +44,53 @@
                                        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
                             firstDay: 1
                         },
-                        autoUpdateInput: false,
-                        opens: 'left'
-                    });
+                        ranges: {
+                            'Сегодня': [moment(), moment()],
+                            'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
+                            'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
+                            'Этот месяц': [moment().startOf('month'), moment().endOf('month')],
+                            'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        }
+                    };
 
-                    $(this.$refs.daterange).on('apply.daterangepicker', function(ev, picker) {
-                        $(this).val(picker.startDate.format('DD.MM.YYYY') + ' - ' + picker.endDate.format('DD.MM.YYYY'));
-                        
+                    // Инициализация daterangepicker
+                    const $daterange = $(this.$refs.daterange);
+                    $daterange.daterangepicker(pickerConfig);
+
+                    // Если есть начальные значения, устанавливаем их
+                    if (startDate && endDate) {
+                        const start = moment(startDate);
+                        const end = moment(endDate);
+                        $daterange.data('daterangepicker').setStartDate(start);
+                        $daterange.data('daterangepicker').setEndDate(end);
+                        $daterange.val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
+                    }
+
+                    // Обработчики событий
+                    $daterange.on('apply.daterangepicker', function(ev, picker) {
                         const startDate = picker.startDate.format('YYYY-MM-DD');
                         const endDate = picker.endDate.format('YYYY-MM-DD');
                         
-                        console.log('Sending dates:', { startDate, endDate });
+                        $(this).val(picker.startDate.format('DD.MM.YYYY') + ' - ' + picker.endDate.format('DD.MM.YYYY'));
                         
-                        // Используем wire:set вместо dispatch
                         @this.set('dateStart', startDate);
                         @this.set('dateEnd', endDate);
                     });
 
-                    $(this.$refs.daterange).on('cancel.daterangepicker', function(ev, picker) {
+                    $daterange.on('cancel.daterangepicker', function(ev, picker) {
                         $(this).val('');
-                        console.log('Clearing dates');
-                        
                         @this.set('dateStart', null);
                         @this.set('dateEnd', null);
+                    });
+
+                    // Слушаем событие для инициализации дат из URL
+                    Livewire.on('initializeDateRange', ({ start, end }) => {
+                        const startDate = moment(start);
+                        const endDate = moment(end);
+                        $daterange.data('daterangepicker').setStartDate(startDate);
+                        $daterange.data('daterangepicker').setEndDate(endDate);
+                        $daterange.val(startDate.format('DD.MM.YYYY') + ' - ' + endDate.format('DD.MM.YYYY'));
                     });
                 }
             }));
@@ -131,6 +151,7 @@
                     class="form-control"
                     placeholder="Выберите период"
                     readonly
+                    wire:model.live="dateRange"
                 />
                 <span class="input-group-text">
                     <i class="bi bi-calendar-range"></i>

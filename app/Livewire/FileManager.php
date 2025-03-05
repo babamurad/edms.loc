@@ -43,9 +43,10 @@ class FileManager extends Component
     public $dateEnd = null;
 
     protected $queryString = [
-        'dateStart' => ['except' => ''],
-        'dateEnd' => ['except' => ''],
-        'showAllFiles' => ['except' => false]
+        'dateStart' => ['except' => null],
+        'dateEnd' => ['except' => null],
+        'showAllFiles' => ['except' => false],
+        'currentFolder' => ['except' => null]
     ];
 
     public $showAllFiles = false; // новое свойство для отслеживания состояния
@@ -127,7 +128,19 @@ class FileManager extends Component
 
     public function mount()
     {
-        $this->showAllFiles = (bool) $this->showAllFiles;
+        // Инициализация значений из URL
+        $this->dateStart = request()->query('dateStart', null);
+        $this->dateEnd = request()->query('dateEnd', null);
+        $this->showAllFiles = (bool) request()->query('showAllFiles', false);
+        $this->currentFolder = request()->query('currentFolder', null);
+
+        // Если есть даты в URL, обновляем значение в daterangepicker
+        if ($this->dateStart && $this->dateEnd) {
+            $this->dispatch('initializeDateRange', [
+                'start' => $this->dateStart,
+                'end' => $this->dateEnd
+            ]);
+        }
     }
 
     public function createFolder()
@@ -311,14 +324,14 @@ class FileManager extends Component
 
     public function updatedDateStart($value)
     {
-        \Log::info('Date Start updated:', ['value' => $value]);
         $this->resetPage();
+        $this->dispatch('updateQueryString');
     }
 
     public function updatedDateEnd($value)
     {
-        \Log::info('Date End updated:', ['value' => $value]);
         $this->resetPage();
+        $this->dispatch('updateQueryString');
     }
 
     private function getBreadcrumbs()
