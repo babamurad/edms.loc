@@ -149,7 +149,7 @@
 
 <div x-data="dateRangePicker">
     <!-- Добавляем фильтр по датам -->
-    <div class="row mb-3">
+    <div class="row pt-2">
         <div class="col-md-4">
             <div class="input-group">
                 <input 
