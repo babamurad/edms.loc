@@ -10,6 +10,8 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class FileManager extends Component
 {
@@ -37,15 +39,28 @@ class FileManager extends Component
     public $show = false;
     public $content = '';
 
+    public $dateStart = null;
+    public $dateEnd = null;
+
+    protected $queryString = [
+        'dateStart' => ['except' => ''],
+        'dateEnd' => ['except' => ''],
+        'showAllFiles' => ['except' => false]
+    ];
+
     public $showAllFiles = false; // новое свойство для отслеживания состояния
-    protected $queryString = ['showAllFiles'];
     protected $paginationTheme = 'bootstrap';
     public $perPage = 12; // количество документов на странице
 
-    protected $rules = [
-        'selectedUsers' => 'required|array|min:1',
-        'message' => 'nullable|string|max:500'
-    ];
+    protected function rules()
+    {
+        return [
+            'dateStart' => 'nullable|date',
+            'dateEnd' => 'nullable|date',
+            'selectedUsers' => 'required|array|min:1',
+            'message' => 'nullable|string|max:500'
+        ];
+    }
 
     protected $messages = [
         'selectedUsers.required' => 'Пожалуйста, выберите получателей',
@@ -247,6 +262,14 @@ class FileManager extends Component
         $this->resetPage(); // сброс страницы при переключении режима
     }
 
+    #[On('dateRangeSelected')]
+    public function handleDateRange($start, $end)
+    {
+        $this->dateStart = $start;
+        $this->dateEnd = $end;
+        $this->resetPage(); // Добавляем сброс страницы при изменении фильтра
+    }
+
     private function getDocuments()
     {
         if ($this->showAllFiles) {
@@ -266,8 +289,36 @@ class FileManager extends Component
             }
         }
 
+        // Фильтрация по дате с выводом отладочной информации
+        if ($this->dateStart && $this->dateEnd) {
+            \Log::info('Filtering by dates:', [
+                'start' => $this->dateStart,
+                'end' => $this->dateEnd
+            ]);
+
+            $startDate = Carbon::parse($this->dateStart)->startOfDay();
+            $endDate = Carbon::parse($this->dateEnd)->endOfDay();
+            
+            $query->whereBetween('created_at', [
+                $startDate,
+                $endDate
+            ]);
+        }
+
         return $query->orderBy('created_at', 'desc')
                     ->paginate($this->perPage);
+    }
+
+    public function updatedDateStart($value)
+    {
+        \Log::info('Date Start updated:', ['value' => $value]);
+        $this->resetPage();
+    }
+
+    public function updatedDateEnd($value)
+    {
+        \Log::info('Date End updated:', ['value' => $value]);
+        $this->resetPage();
     }
 
     private function getBreadcrumbs()

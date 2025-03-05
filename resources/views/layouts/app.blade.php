@@ -632,6 +632,7 @@
         @stack('summernote')
         @stack('select2-js')
         @stack('scripts')
+        @stack('dateRangePicker')
         
     </body>
 </html>
