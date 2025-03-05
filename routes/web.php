@@ -34,7 +34,12 @@ Route::middleware('auth')->group(function (){
     Route::get('category/{id}/edit', CategoryEdit::class)->name('category.edit');
 
     // Route::get('documents',DocumentsIndex::class)->name('documents');
-    Route::get('documents', FileManager::class)->name('documents');
+    Route::get('documents/{dateStart?}/{dateEnd?}', FileManager::class)
+        ->name('documents')
+        ->where([
+            'dateStart' => '[0-9]{4}-[0-9]{2}-[0-9]{2}',
+            'dateEnd' => '[0-9]{4}-[0-9]{2}-[0-9]{2}'
+        ]);
     Route::get('documents/create', DocumentsCreate::class)->name('documents.create');
     Route::get('documents/{id}/edit', DocumentsEdit::class)->name('documents.edit');
     Route::get('documents/{id}/view',DocumentsView::class)->name('documents.view');

@@ -74,12 +74,19 @@
                         
                         $(this).val(picker.startDate.format('DD.MM.YYYY') + ' - ' + picker.endDate.format('DD.MM.YYYY'));
                         
+                        // Обновляем URL и состояние компонента
+                        window.history.pushState({}, '', `/documents/${startDate}/${endDate}`);
+                        
                         @this.set('dateStart', startDate);
                         @this.set('dateEnd', endDate);
                     });
 
                     $daterange.on('cancel.daterangepicker', function(ev, picker) {
                         $(this).val('');
+                        
+                        // Очищаем URL и состояние компонента
+                        window.history.pushState({}, '', '/documents');
+                        
                         @this.set('dateStart', null);
                         @this.set('dateEnd', null);
                     });

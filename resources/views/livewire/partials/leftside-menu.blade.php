@@ -47,7 +47,8 @@
                 </a>
             </li>
             <li class="side-nav-item">
-                <a href="{{ route('documents') }}" class="side-nav-link {{ request()->is('documents') ? 'active' : '' }}">
+                <a href="{{ route('documents') }}" 
+                   class="side-nav-link {{ request()->routeIs('documents') ? 'active' : '' }}">
                     <i class="ri-file-list-fill"></i>
                     <span> {{ __('Documents') }} </span>
                 </a>

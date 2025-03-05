@@ -126,15 +126,15 @@ class FileManager extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($dateStart = null, $dateEnd = null)
     {
-        // Инициализация значений из URL
-        $this->dateStart = request()->query('dateStart', null);
-        $this->dateEnd = request()->query('dateEnd', null);
+        // Приоритет URL-параметров над query-параметрами
+        $this->dateStart = $dateStart ?? request()->query('dateStart', null);
+        $this->dateEnd = $dateEnd ?? request()->query('dateEnd', null);
         $this->showAllFiles = (bool) request()->query('showAllFiles', false);
         $this->currentFolder = request()->query('currentFolder', null);
 
-        // Если есть даты в URL, обновляем значение в daterangepicker
+        // Если есть даты, инициализируем daterangepicker
         if ($this->dateStart && $this->dateEnd) {
             $this->dispatch('initializeDateRange', [
                 'start' => $this->dateStart,
@@ -325,13 +325,23 @@ class FileManager extends Component
     public function updatedDateStart($value)
     {
         $this->resetPage();
-        $this->dispatch('updateQueryString');
+        if ($value && $this->dateEnd) {
+            $this->redirectRoute('documents', [
+                'dateStart' => $value,
+                'dateEnd' => $this->dateEnd
+            ]);
+        }
     }
 
     public function updatedDateEnd($value)
     {
         $this->resetPage();
-        $this->dispatch('updateQueryString');
+        if ($value && $this->dateStart) {
+            $this->redirectRoute('documents', [
+                'dateStart' => $this->dateStart,
+                'dateEnd' => $value
+            ]);
+        }
     }
 
     private function getBreadcrumbs()
