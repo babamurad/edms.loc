@@ -18,12 +18,15 @@ use App\Livewire\UserManager\UserManager;
 use App\Livewire\UserManager\UserCreate;
 use App\Livewire\UserManager\UserEdit;
 use App\Livewire\HomeComponent;
+use App\Livewire\ProfileComponent;
 use App\Livewire\User\Login;
 use App\Livewire\User\Register;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function (){
     Route::get('/', HomeComponent::class)->name('home');
+
+    Route::get('profile', ProfileComponent::class)->name('profile');
 
     Route::get('department', DepartmentIndex::class)->name('department');
     Route::get('department/create', DepartmentCreate::class)->name('department.create');
