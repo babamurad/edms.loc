@@ -134,8 +134,19 @@ class FileManager extends Component
         $this->showAllFiles = (bool) request()->query('showAllFiles', false);
         $this->currentFolder = request()->query('currentFolder', null);
 
-        // Если есть даты, инициализируем daterangepicker
+        // Если есть даты в сессии, используем их
+        if (!$this->dateStart && !$this->dateEnd) {
+            $this->dateStart = session('filemanager_date_start');
+            $this->dateEnd = session('filemanager_date_end');
+        }
+
+        // Сохраняем даты в сессию
         if ($this->dateStart && $this->dateEnd) {
+            session([
+                'filemanager_date_start' => $this->dateStart,
+                'filemanager_date_end' => $this->dateEnd
+            ]);
+            
             $this->dispatch('initializeDateRange', [
                 'start' => $this->dateStart,
                 'end' => $this->dateEnd
@@ -324,6 +335,7 @@ class FileManager extends Component
 
     public function updatedDateStart($value)
     {
+        session(['filemanager_date_start' => $value]);
         $this->resetPage();
         if ($value && $this->dateEnd) {
             $this->redirectRoute('documents', [
@@ -335,6 +347,7 @@ class FileManager extends Component
 
     public function updatedDateEnd($value)
     {
+        session(['filemanager_date_end' => $value]);
         $this->resetPage();
         if ($value && $this->dateStart) {
             $this->redirectRoute('documents', [

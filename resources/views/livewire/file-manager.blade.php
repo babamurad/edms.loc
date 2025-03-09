@@ -74,30 +74,32 @@
                         
                         $(this).val(picker.startDate.format('DD.MM.YYYY') + ' - ' + picker.endDate.format('DD.MM.YYYY'));
                         
-                        // Обновляем URL и состояние компонента
-                        window.history.pushState({}, '', `/documents/${startDate}/${endDate}`);
-                        
+                        // Обновляем состояние Livewire компонента
                         @this.set('dateStart', startDate);
                         @this.set('dateEnd', endDate);
+                        
+                        // Обновляем URL
+                        window.history.pushState({}, '', `/documents/${startDate}/${endDate}`);
                     });
 
                     $daterange.on('cancel.daterangepicker', function(ev, picker) {
                         $(this).val('');
-                        
-                        // Очищаем URL и состояние компонента
-                        window.history.pushState({}, '', '/documents');
-                        
+                        // Очищаем состояние Livewire компонента
                         @this.set('dateStart', null);
                         @this.set('dateEnd', null);
+                        // Обновляем URL
+                        window.history.pushState({}, '', '/documents');
                     });
 
-                    // Слушаем событие для инициализации дат из URL
-                    Livewire.on('initializeDateRange', ({ start, end }) => {
-                        const startDate = moment(start);
-                        const endDate = moment(end);
-                        $daterange.data('daterangepicker').setStartDate(startDate);
-                        $daterange.data('daterangepicker').setEndDate(endDate);
-                        $daterange.val(startDate.format('DD.MM.YYYY') + ' - ' + endDate.format('DD.MM.YYYY'));
+                    // Прослушиваем событие от Livewire для инициализации дат
+                    window.Livewire.on('initializeDateRange', data => {
+                        if (data.start && data.end) {
+                            const start = moment(data.start);
+                            const end = moment(data.end);
+                            $daterange.data('daterangepicker').setStartDate(start);
+                            $daterange.data('daterangepicker').setEndDate(end);
+                            $daterange.val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
+                        }
                     });
                 }
             }));
@@ -500,4 +502,3 @@
 
     </div>
 </div>
-
