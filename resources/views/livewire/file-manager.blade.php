@@ -288,9 +288,9 @@
                                     <a href="{{ asset($file->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
+                                    {{-- <a href="{{ route('documents.edit', ['id' => $file->id]) }}" class="btn btn-sm btn-info me-1">
                                         <i class="bi bi-pencil"></i>
-                                    </a>
+                                    </a> --}}
                                     <button type="button" class="btn btn-sm btn-primary me-1" wire:click="openShareModal({{ $file->id }})">
                                         <i class="bi bi-share"></i> 
                                     </button>

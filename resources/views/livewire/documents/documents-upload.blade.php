@@ -8,51 +8,6 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('Title') }}</label>
-                        <input type="text" id="title" class="form-control" wire:model="title" wire:keyup="generateSlug()">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label for="slug" class="form-label">{{ __('Slug') }}</label>
-                        <input type="text" id="slug" class="form-control" wire:model="slug">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label for="department" class="form-label">{{ __('Departments') }}</label>
-                        <select class="form-select" id="department" wire:model="selectedDepartment">
-                            <option value="" selected>{{ __('Select an department') }}</option>
-                            @foreach($departments as $department)
-                                <option wire:key="{{ $department->id }}" value="{{ $department->id }}">{{ $department->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label for="category" class="form-label">{{ __('Categories') }}</label>
-                        <select class="form-select" id="category" wire:model="selectedCategory">
-                            <option value="" selected>{{ __('Select an category') }}</option>
-                            @foreach($categories as $category)
-                                <option wire:key="{{ $category->id }}" value="{{ $category->id }}">{{ $category->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label for="category" class="form-label">{{ __('Statuses') }}</label>
-                        <select class="form-select" id="category" wire:model="selectedStatus">
-                            <option value="" selected>{{ __('Select an status') }}</option>
-                            @foreach($statuses as $status)
-                                <option wire:key="{{ $status->id }}" value="{{ $status->id }}">{{ $status->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="mb-3">
@@ -71,8 +26,43 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">{{ __('Title') }}</label>
+                        <input type="text" id="title" class="form-control" wire:model="title" wire:keyup="generateSlug()">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="department" class="form-label">{{ __('Departments') }}</label>
+                        <select class="form-select" id="department" wire:model="selectedDepartment">
+                            <option value="" selected>{{ __('Select an department') }}</option>
+                            @foreach($departments as $department)
+                                <option wire:key="{{ $department->id }}" value="{{ $department->id }}">{{ $department->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="category" class="form-label">{{ __('Categories') }}</label>
+                        <select class="form-select" id="category" wire:model="selectedCategory">
+                            <option value="" selected>{{ __('Select an category') }}</option>
+                            @foreach($categories as $category)
+                                <option wire:key="{{ $category->id }}" value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label for="slug" class="form-label">{{ __('Slug') }}</label>
+                        <input type="text" id="slug" class="form-control" wire:model="slug">
+                    </div>
+                </div>               
+                                              
             </div>
 
         </div>
