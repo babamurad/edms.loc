@@ -40,13 +40,15 @@
                             <td><span class="badge bg-primary">{{ $category->department->title }}</span></td>
                             <td>{{ $category->slug }}</td>
                             <td>
-                                <a type="button" href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
-                                <button type="button" class="btn btn-sm btn-danger" style="float: none;"
-                                        {{--                                        data-bs-toggle="modal" data-bs-target="#ConfirmDelete" --}}
-
-                                        @click="showModal = true, delId={{ $category->id }}">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a type="button" href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success" style="float: none;">
+                                        <span class="mdi mdi-pencil"></span>
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-danger" style="float: none;" 
+                                            @click="showModal = true, delId={{ $category->id }}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

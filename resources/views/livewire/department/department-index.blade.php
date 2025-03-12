@@ -49,6 +49,7 @@
                             <td><span class="badge bg-primary">{{ $department->slug }}</span></td>
                             <td>{{ $department->description }}</td>
                             <td>
+                                @if(auth()->user()->hasRole('admin'))
                                 <a type="button" href="{{ route('department.edit', ['id' => $department->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
                                 <button type="button" class="btn btn-sm btn-danger" style="float: none;"
 {{--                                        data-bs-toggle="modal" data-bs-target="#ConfirmDelete" --}}
@@ -56,6 +57,7 @@
                                         @click="showModal = true, delId={{ $department->id }}">
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
