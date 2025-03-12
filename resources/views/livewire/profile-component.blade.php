@@ -64,13 +64,21 @@
                         <div class="row row-cols-sm-2 row-cols-1">
                             <div class="col-sm-4">
                                 <div class="col-mb-12">
-                                    @if ($newavatar)
-                                        <img class="img-fluid w-80" src="{{ $newavatar->temporaryUrl() }}" alt="{{ auth()->user()->name }}">
-                                    @elseif(auth()->user()->avatar)
-                                        <img class="img-fluid w-80" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}">
-                                    @else
-                                        <img class="img-fluid w-80" src="{{ asset('assets/images/avatar-1.png') }}" alt="">
-                                    @endif
+                                    <div wire:loading wire:target="newavatar" class="position-absolute top-50 start-50 translate-middle">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div wire:loading.remove wire:target="newavatar">
+                                        @if ($newavatar)
+                                            <img class="img-fluid w-80" src="{{ $newavatar->temporaryUrl() }}" alt="{{ auth()->user()->name }}">
+                                        @elseif(auth()->user()->avatar)
+                                            <img class="img-fluid w-80" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}">
+                                        @else
+                                            <img class="img-fluid w-80" src="{{ asset('assets/images/avatar-1.png') }}" alt="">
+                                        @endif
+                                    </div>
                                     {{-- <img class="avatar-lg" src="{{ asset('assets/images/avatar-1.jpg') }}" alt="">                                     --}}
                                 </div>
                                 
