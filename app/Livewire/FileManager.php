@@ -114,15 +114,14 @@ class FileManager extends Component
     public function render()
     {
         $documents = $this->getDocuments();
-        $folderTree = $this->getFolderTree();
+        $folders = $this->getFolders();
         
         return view('livewire.file-manager', [
-            'folders' => Folder::where('parent_id', $this->currentFolder)->get(),
+            'folders' => $folders,
             'documents' => $documents,
             'currentFolderModel' => $this->currentFolder ? Folder::find($this->currentFolder) : null,
             'breadcrumbs' => $this->getBreadcrumbs(),
-            'departments' => $this->getDepartments(),
-            'folderTree' => $folderTree
+            'departments' => $this->getDepartments()
         ]);
     }
 
@@ -381,5 +380,30 @@ class FileManager extends Component
             $query->where('active', true)
                   ->where('id', '!=', auth()->id());
         }])->get();
+    }
+
+    private function getFolders()
+    {
+        $query = Folder::query();
+
+        if ($this->showAllFiles) {
+            // Показываем все папки
+            $query->with(['documents'])
+                  ->when(!auth()->user()->hasRole('admin'), function($q) {
+                      $q->where('user_id', auth()->id());
+                  });
+        } else {
+            // Показываем папки текущего уровня
+            $query->where('parent_id', $this->currentFolder)
+                  ->with(['documents'])
+                  ->when(!auth()->user()->hasRole('admin'), function($q) {
+                      $q->where('user_id', auth()->id());
+                  });
+        }
+
+        // Добавляем сортировку
+        $query->orderBy('name');
+
+        return $query->paginate($this->perPage);
     }
 }
