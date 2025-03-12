@@ -4,12 +4,11 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">СЭД</a></li>
+                    <li class="breadcrumb-item active">Профиль</li>
                 </ol>
             </div>
-            <h4 class="page-title">{{ __('Categories') }}</h4>
+            <h4 class="page-title">{{ __('Profile') }}</h4>
             @include('livewire.partials.alerts')
         </div>
     </div>

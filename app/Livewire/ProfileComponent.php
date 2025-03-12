@@ -66,6 +66,7 @@ class ProfileComponent extends Component
         }
 
         $this->isEdit = false;
+        $this->dispatch('change-profile-image');
         session()->flash('success', 'Profile updated successfully.');
     }
 
