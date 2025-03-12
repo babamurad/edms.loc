@@ -1,9 +1,10 @@
 <div class="leftside-menu">
 
     <!-- Brand Logo Light -->
-    <a href="index.html" class="logo logo-light">
+    <a href="/" class="logo logo-light">
         <span class="logo-lg">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="logo">
+            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo">
+            <span class="text-white ms-1 fs-20">Hakimlik</span>
         </span>
         <span class="logo-sm">
             <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo">
@@ -11,9 +12,10 @@
     </a>
 
     <!-- Brand Logo Dark -->
-    <a href="index.html" class="logo logo-dark">
+    <a href="/" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo">
+            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="dark logo">
+            <span class="text-white ms-1 fs-20">Hakimlik</span>
         </span>
         <span class="logo-sm">
             <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo">
@@ -33,7 +35,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-
+            @if(auth()->user()->hasRole('admin'))
             <li class="side-nav-item">
                 <a href="{{ route('department') }}" class="side-nav-link {{ request()->is('department') ? 'active' : '' }}">
                     <i class="ri-archive-drawer-fill"></i>
@@ -46,6 +48,7 @@
                     <span> {{ __('Category') }} </span>
                 </a>
             </li>
+            @endif
             <li class="side-nav-item">
                 <a href="{{ route('documents') }}" 
                    class="side-nav-link {{ request()->routeIs('documents') ? 'active' : '' }}">

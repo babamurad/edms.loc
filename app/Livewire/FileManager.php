@@ -388,14 +388,14 @@ class FileManager extends Component
 
         if ($this->showAllFiles) {
             // Показываем все папки
-            $query->with(['documents'])
+            $query->with(['documents', 'owner'])  // убедимся что owner загружается
                   ->when(!auth()->user()->hasRole('admin'), function($q) {
                       $q->where('user_id', auth()->id());
                   });
         } else {
             // Показываем папки текущего уровня
             $query->where('parent_id', $this->currentFolder)
-                  ->with(['documents'])
+                  ->with(['documents', 'owner'])  // убедимся что owner загружается
                   ->when(!auth()->user()->hasRole('admin'), function($q) {
                       $q->where('user_id', auth()->id());
                   });
