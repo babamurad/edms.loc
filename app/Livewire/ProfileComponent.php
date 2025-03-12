@@ -35,29 +35,37 @@ class ProfileComponent extends Component
     {
         $this->validate($this->rules());
 
-        // if ($this->newavatar) {
-        //     // Удаляем старый аватар если есть
-        //     if (auth()->user()->avatar) {
-        //         Storage::disk('public')->delete(auth()->user()->avatar);
-        //     }
-            
-        //     // Сохраняем новый аватар
-        //     $path = $this->newavatar->store('avatars', 'public');
-        //     $this->avatar = $path;
-        // }
-
-        auth()->user()->update([
+        $user = auth()->user();
+        $updateData = [
             'name' => $this->name,
             'email' => $this->email,
-            // 'avatar' => $this->avatar,
-        ]);
+        ];
 
+        // Обработка аватара
+        if ($this->newavatar) {
+            // Удаляем старый аватар если есть
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            
+            // Сохраняем новый аватар
+            $imageName = time() . '.' . $this->newavatar->getClientOriginalExtension();
+            $path = $this->newavatar->storeAs('avatars', $imageName, 'public');
+            
+            $updateData['avatar'] = $path;
+            $this->avatar = $path;
+            $this->newavatar = null;
+        }
+
+        // Обновляем данные пользователя
+        $user->update($updateData);
+
+        // Обновляем пароль если он был изменен
         if ($this->password) {
-            auth()->user()->update(['password' => bcrypt($this->password)]);
+            $user->update(['password' => bcrypt($this->password)]);
         }
 
         $this->isEdit = false;
-
         session()->flash('success', 'Profile updated successfully.');
     }
 
