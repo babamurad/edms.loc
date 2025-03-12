@@ -44,17 +44,24 @@
                                 </span></td>
                                 <td>{{ $share->created_at->format('d.m.Y H:i') }}</td>
                                 <td>
-                                    <a href="{{ asset($share->document->ReceivedFileUrl) }}" 
-                                       target="_blank" 
-                                       class="btn btn-sm btn-primary"
-                                       wire:click="markAsRead({{ $share->id }})">
-                                        <i class="bi bi-eye"></i> View
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="{{ asset($share->document->ReceivedFileUrl) }}" 
+                                           target="_blank" 
+                                           class="btn btn-sm btn-primary me-1"
+                                           wire:click="markAsRead({{ $share->id }})">
+                                            <i class="bi bi-eye"></i> {{ __('View') }}
+                                        </a>
+                                        <a href="{{ asset($share->document->ReceivedFileUrl) }}" 
+                                           class="btn btn-sm btn-success"
+                                           download="{{ $share->document->title }}.{{ $share->document->file_extension }}">
+                                            <i class="bi bi-download"></i> {{ __('Download') }}
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">No incoming documents</td>
+                                <td colspan="6" class="text-center">{{ __('No incoming documents') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
