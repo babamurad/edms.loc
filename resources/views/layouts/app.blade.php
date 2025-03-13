@@ -188,7 +188,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12 text-center">
-                                {{ date('Y') }} © Velonic - Theme by <b>Techzaa</b>
+                                {{ date('Y') }} ý. © <b>Lebap</b> welaýat häkimligi
                             </div>
                         </div>
                     </div>

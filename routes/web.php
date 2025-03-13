@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('lang/{locale}', [\App\Http\Controllers\LocalizationController::class, 'setLang'])->name('lang');
 
-Route::middleware('auth')->group(function (){
+
+Route::middleware('auth', 'locale')->group(function (){
     Route::get('/', HomeComponent::class)->name('home');
 
     Route::get('profile', ProfileComponent::class)->name('profile');

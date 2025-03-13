@@ -6,12 +6,11 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                    <li class="breadcrumb-item active">Welcome!</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ __('Dashboard') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('Welcome!') }}</li>
                 </ol>
             </div>
-            <h4 class="page-title">Document Managment System</h4>
+            <h4 class="page-title">{{ __('Document Managment System') }}</h4>
         </div>
     </div>
 </div>
@@ -24,7 +23,7 @@
                 <div class="float-end">
                     <i class="ri-building-2-line widget-icon"></i>
                 </div>
-                <h6 class="text-uppercase mt-0" title="Departments">Departments</h6>
+                <h6 class="text-uppercase mt-0" title="Departments">{{ __('Departments') }}</h6>
                 <h2 class="my-2">{{ $departments }}</h2>
             </div>
         </div>
@@ -36,7 +35,7 @@
                 <div class="float-end">
                     <i class="ri-folder-2-line widget-icon"></i>
                 </div>
-                <h6 class="text-uppercase mt-0" title="Categories">Categories</h6>
+                <h6 class="text-uppercase mt-0" title="Categories">{{ __('Categories') }}</h6>
                 <h2 class="my-2">{{ $categories }}</h2>
             </div>
         </div>
@@ -48,7 +47,7 @@
                 <div class="float-end">
                     <i class="ri-file-list-3-line widget-icon"></i>
                 </div>
-                <h6 class="text-uppercase mt-0" title="Documents">Documents</h6>
+                <h6 class="text-uppercase mt-0" title="Documents">{{ __('Documents') }}</h6>
                 <h2 class="my-2">{{ $documents }}</h2>
             </div>
         </div>
@@ -60,7 +59,7 @@
                 <div class="float-end">
                     <i class="ri-team-line widget-icon"></i>
                 </div>
-                <h6 class="text-uppercase mt-0" title="Users">Users</h6>
+                <h6 class="text-uppercase mt-0" title="Users">{{ __('Users') }}</h6>
                 <h2 class="my-2">{{ $users }}</h2>
             </div>
         </div>

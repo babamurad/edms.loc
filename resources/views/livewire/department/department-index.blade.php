@@ -4,9 +4,8 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item"><a href="{{ route('department') }}">{{ __('Departments') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('List') }}</li>
                 </ol>
             </div>
             <h4 class="page-title">{{ __('Departments') }}</h4>
@@ -26,7 +25,7 @@
         <div class="card-header">
             <div class="d-flex  justify-content-between">
                 <h4 class="header-title">{{ __('Departments List') }}</h4>
-                <a href="{{ route('department.create') }}" type="button" class="btn btn-primary">Create</a>
+                <a href="{{ route('department.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -34,11 +33,11 @@
                 <table class="table table-hover table-centered mb-0">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Slug</th>
-                        <th>Description</th>
-                        <th>Action</th>
+                        <th>{{ __('ID') }}</th>
+                        <th>{{ __('Title') }}</th>
+                        <th>{{ __('Slug') }}</th>
+                        <th>{{ __('Description') }}</th>
+                        <th>{{ __('Actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,7 +64,7 @@
                     </tbody>
                 </table>
                 @if(!$departments)
-                    <p>No items found.</p>
+                    <p>{{ __('No items found.') }}</p>
                 @else
                     {{ $departments->links() }}
                 @endif

@@ -4,9 +4,8 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item"><a href="{{ route('department') }}">{{ __('Departments') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('Edit') }}</li>
                 </ol>
             </div>
             <h4 class="page-title">{{ __('Edit Department') }}</h4>
@@ -28,9 +27,9 @@
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label class="form-label" for="validationCustom01">{{ __('Title') }}</label>
-                            <input type="text" class="form-control" id="validationCustom01" placeholder="Title" wire:model="title" wire:keyup="generateSlug()">
+                            <input type="text" class="form-control" id="validationCustom01" placeholder="{{ __('Title') }}" wire:model="title" wire:keyup="generateSlug()">
                             <div class="valid-feedback">
-                                Looks good!
+                                {{ __('Looks good!') }}
                             </div>
                         </div>
                     </div>
@@ -39,7 +38,7 @@
                             <label class="form-label" for="validationCustom02">{{ __('Slug') }}</label>
                             <input type="text" class="form-control" id="validationCustom02" wire:model="slug">
                             <div class="valid-feedback">
-                                Looks good!
+                                {{ __('Looks good!') }}
                             </div>
                         </div>
                     </div>

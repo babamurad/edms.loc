@@ -32,7 +32,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('home') }}" class="side-nav-link  {{ request()->is('/') ? 'active' : '' }}">
                     <i class="ri-dashboard-3-line"></i>
-                    <span> Dashboard </span>
+                    <span> {{ __('Dashboard') }} </span>
                 </a>
             </li>
             @if(auth()->user()->hasRole('admin'))
@@ -59,7 +59,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('documents.inbox') }}" class="side-nav-link">
                     <i class="bi bi-inbox"></i>
-                    <span>Inbox</span>
+                    <span>{{ __('Inbox') }}</span>
                     @php
                         $unreadCount = \App\Models\DocumentShare::where('recipient_id', auth()->id())
                             ->whereNull('read_at')
