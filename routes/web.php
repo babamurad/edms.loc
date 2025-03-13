@@ -23,6 +23,8 @@ use App\Livewire\User\Login;
 use App\Livewire\User\Register;
 use Illuminate\Support\Facades\Route;
 
+Route::get('lang/{locale}', [\App\Http\Controllers\LocalizationController::class, 'setLang'])->name('lang');
+
 Route::middleware('auth')->group(function (){
     Route::get('/', HomeComponent::class)->name('home');
 

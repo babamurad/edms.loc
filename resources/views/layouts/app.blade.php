@@ -106,7 +106,32 @@
                                         aria-label="Recipient's username">
                                 </form>
                             </div>
-                        </li>                        
+                        </li>
+                        
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                @if(session()->get('locale') == 'tk')
+                                <img src="{{ asset('assets/images/flags/turkmen.png') }}" alt="user-image" class="me-0 me-sm-1" height="12">
+                                <span class="align-middle d-none d-lg-inline-block">Türkmen</span> <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
+                                @elseif(session()->get('locale') == 'ru' || strlen(session()->get('locale') == 'ru') == 0)
+                                <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image" class="me-0 me-sm-1" height="12">
+                                <span class="align-middle d-none d-lg-inline-block">Русский</span> <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
+                                @endif
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+
+                                <!-- item-->
+                                <a href="{{ route('lang', ['locale' => 'tk']) }}" class="dropdown-item">
+                                    <img src="{{ asset('assets/images/flags/turkmen.png') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Türkmen</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="{{ route('lang', ['locale' => 'ru']) }}" class="dropdown-item">
+                                    <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Русский</span>
+                                </a>
+
+                            </div>
+                        </li>
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="{{ route('documents.inbox') }}" role="button"

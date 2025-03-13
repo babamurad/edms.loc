@@ -267,8 +267,13 @@
                                         </button>
                                     </div>
                                     <div class="mt-1">
-                                        <span class="badge bg-purple-subtle text-purple">Author: 
-                                            <b>{{ $folder->owner->name ?? '' }}</b>
+                                        <span class="badge bg-purple-subtle text-purple">
+                                            Author: <b>{{ $folder->owner->name ?? '' }}</b>
+                                        </span>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="badge bg-secondary-subtle text-secondary rounded-pill">
+                                            {{ Carbon\Carbon::create($folder->created_at)->format('d.m.Y') }}
                                         </span>
                                     </div>
                                 </div>
