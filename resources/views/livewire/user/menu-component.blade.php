@@ -16,7 +16,7 @@
     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
         <!-- item-->
         <div class=" dropdown-header noti-title">
-            <h6 class="text-overflow m-0">{{ __('Welcome !') }}</h6>
+            <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
         </div>
 
         <!-- item-->

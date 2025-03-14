@@ -66,8 +66,8 @@
                             @error('selectedRoles') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">{{ __('Create User') }}</button>
-                        <a href="{{ route('user-manager') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                        <button type="submit" class="btn btn-primary"><i class="ri-save-line me-1 fs-16 lh-1"></i>{{ __('Create User') }}</button>
+                        <a href="{{ route('user-manager') }}" class="btn btn-secondary"><i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i>{{ __('Cancel') }}</a>
                     </form>
                 </div>
             </div>

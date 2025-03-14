@@ -16,7 +16,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="header-title">{{ __('Users List') }}</h4>
-                <a href="{{ route('user.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>
+                <a href="{{ route('user.create') }}" type="button" class="btn btn-primary"><i class="ri-file-add-line me-1"></i>{{ __('Create') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -70,7 +70,14 @@
                     @foreach ($users as $user)
                         <tr wire:key="{{ $user->id }}">
                             <td>{{ $user->id }}</td>
-                            <td><a href="{{ route('user.edit', $user->id) }}">{{ $user->name }}</a></td>
+                            <td>
+                                <a href="{{ route('user.edit', $user->id) }}">
+                                    @if($user->hasRole('admin'))
+                                        <i class="ri-star-fill text-warning me-1"></i>
+                                    @endif
+                                    {{ $user->name }}
+                                </a>
+                            </td>
                             <td>{{ $user->email }}</td>
                             <td>
                                 @if($user->department)

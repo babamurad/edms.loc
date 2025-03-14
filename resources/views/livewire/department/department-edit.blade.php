@@ -16,8 +16,8 @@
             <div class="d-flex  justify-content-between">
                 <h4 class="header-title">{{ __('Edit Department') }}</h4>
                 <div class="justify-content-right">
-                    <button type="button" class="btn btn-primary" wire:click="create">{{ __('Update') }}</button>
-                    <a type="button" href="{{ route('department') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                    <button type="button" class="btn btn-primary" wire:click="create"><i class="ri-save-line me-1 fs-16 lh-1"></i>{{ __('Update') }}</button>
+                    <a type="button" href="{{ route('department') }}" class="btn btn-secondary"><i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i>{{ __('Cancel') }}</a>
                 </div>
             </div>
         </div>
@@ -47,8 +47,8 @@
                     <label for="example-textarea" class="form-label">{{ __('Description') }}</label>
                     <textarea class="form-control" id="example-textarea" rows="5" wire:model="description"></textarea>
                 </div>
-                <button class="btn btn-primary" type="submit">{{__('Update')}}</button>
-                <a type="button" href="{{ route('department') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                <button class="btn btn-primary" type="submit"><i class="ri-save-line me-1 fs-16 lh-1"></i>{{__('Update')}}</button>
+                <a type="button" href="{{ route('department') }}" class="btn btn-secondary"><i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i>{{ __('Cancel') }}</a>
             </form>
 
         </div> <!-- end card body-->

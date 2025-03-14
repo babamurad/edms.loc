@@ -16,7 +16,7 @@
         <div class="card-header">
             <div class="d-flex  justify-content-between">
                 <h4 class="header-title">{{ __('Categories List') }}</h4>
-                <a href="{{ route('category.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>
+                <a href="{{ route('category.create') }}" type="button" class="btn btn-primary"><i class="ri-file-add-line me-1"></i>{{ __('Create') }}</a>
             </div>
         </div>
         <div class="card-body">

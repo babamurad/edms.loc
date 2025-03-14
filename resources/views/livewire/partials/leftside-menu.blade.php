@@ -35,32 +35,30 @@
                     <span> {{ __('Dashboard') }} </span>
                 </a>
             </li>
-            @if(auth()->user()->hasRole('admin'))
-            <li class="side-nav-item">
-                <a href="{{ route('department') }}" class="side-nav-link {{ request()->is('department') ? 'active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs('department') || request()->routeIs('department.create') || request()->routeIs('department.edit') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('department') }}" class="side-nav-link {{ request()->routeIs('department') || request()->routeIs('department.create') || request()->routeIs('department.edit') ? 'active' : '' }}">
                     <i class="ri-archive-drawer-fill"></i>
                     <span> {{ __('Departments') }} </span>
                 </a>
             </li>
-            <li class="side-nav-item">
-                <a href="{{ route('category') }}" class="side-nav-link {{ request()->is('category') ? 'active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs('category') || request()->routeIs('category.create') || request()->routeIs("category.edit") ? 'menuitem-active' : '' }}">
+                <a href="{{ route('category') }}" class="side-nav-link">
                     <i class="ri-briefcase-line"></i>
                     <span> {{ __('Category') }} </span>
                 </a>
             </li>
-            <li class="side-nav-item">
-                <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
+            <li class="side-nav-item @if(request()->routeIs('role-manager')) menuitem-active @endif">
+                <a href="{{ route('role-manager') }}" class="side-nav-link">
                     <i class="ri-user-settings-fill"></i>
                     <span> {{ __('Role Manager') }} </span>
                 </a>
             </li>
-            <li class="side-nav-item">
-                <a href="{{ route('user-manager') }}" class="side-nav-link {{ request()->is('user-manager') ? 'active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs('user-manager') || request()->routeIs('user.create') || request()->routeIs('user.edit') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('user-manager') }}" class="side-nav-link {{ request()->routeIs('user-manager') || request()->routeIs('user.create') || request()->routeIs('user.edit') ? 'active' : '' }}">
                     <i class="ri-team-fill"></i>
                     <span> {{ __('User Manager') }} </span>
                 </a>
             </li>
-            @endif
             <li class="side-nav-item">
                 <a href="{{ route('documents') }}" 
                    class="side-nav-link {{ request()->routeIs('documents') ? 'active' : '' }}">
