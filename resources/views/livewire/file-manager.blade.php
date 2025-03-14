@@ -34,23 +34,26 @@
                         opens: 'left',
                         locale: {
                             format: 'DD.MM.YYYY',
-                            applyLabel: 'Применить',
-                            cancelLabel: 'Очистить',
-                            fromLabel: 'От',
-                            toLabel: 'До',
-                            customRangeLabel: 'Выбрать даты',
-                            daysOfWeek: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
-                                       'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                            applyLabel: "{{ __('Apply') }}",
+                            cancelLabel: "{{ __('Clear') }}",
+                            fromLabel: "{{ __('From') }}",
+                            toLabel: "{{ __('To') }}",
+                            customRangeLabel: "{{ __('Select dates') }}",
+                            daysOfWeek: ["{{ __('Su') }}", "{{ __('Mo') }}", "{{ __('Tu') }}", "{{ __('We') }}", "{{ __('Th') }}", "{{ __('Fr') }}", "{{ __('Sa') }}"],
+                            monthNames: [
+                                "{{ __('January') }}", "{{ __('February') }}", "{{ __('March') }}", "{{ __('April') }}", 
+                                "{{ __('May') }}", "{{ __('June') }}", "{{ __('July') }}", "{{ __('August') }}", 
+                                "{{ __('September') }}", "{{ __('October') }}", "{{ __('November') }}", "{{ __('December') }}"
+                            ],
                             firstDay: 1
                         },
                         ranges: {
-                            'Сегодня': [moment(), moment()],
-                            'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
-                            'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
-                            'Этот месяц': [moment().startOf('month'), moment().endOf('month')],
-                            'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                            "{{ __('Today') }}": [moment(), moment()],
+                            "{{ __('Yesterday') }}": [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            "{{ __('Last 7 Days') }}": [moment().subtract(6, 'days'), moment()],
+                            "{{ __('Last 30 Days') }}": [moment().subtract(29, 'days'), moment()],
+                            "{{ __('This Month') }}": [moment().startOf('month'), moment().endOf('month')],
+                            "{{ __('Last Month') }}": [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                         }
                     };
 
@@ -131,13 +134,13 @@
                 dropdownParent: select.closest('.modal-content'),
                 language: {
                     searching: function() {
-                        return "Поиск...";
+                        return "{{ __('Searching...') }}";
                     },
                     noResults: function() {
-                        return "Результатов не найдено";
+                        return "{{ __('No results found') }}";
                     }
                 },
-                placeholder: 'Выберите получателей',
+                placeholder: "{{ __('Select recipients') }}",
                 allowClear: true
             }).on('select2:select select2:unselect', function(e) {
                 let data = select.val();
@@ -158,7 +161,7 @@
                     x-ref="daterange"
                     type="text" 
                     class="form-control"
-                    placeholder="Выберите период"
+                    placeholder="{{ __('Select period') }}"
                     readonly
                     wire:model.live="dateRange"
                 />
@@ -207,16 +210,16 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <button class="btn btn-primary" wire:click="$set('showCreateModal', true)">
-                            <i class="bi bi-folder-plus"></i> Создать папку
+                            <i class="bi bi-folder-plus"></i> {{ __('Create folder') }}
                         </button>
 
                         <a href="{{ route('documents.upload', ['folder' => $currentFolder]) }}" class="btn btn-primary ms-2">
-                            <i class="bi bi-upload"></i> Загрузить документ
+                            <i class="bi bi-upload"></i> {{ __('Upload document') }}
                         </a>
 
                         @if($currentFolder && !$showAllFiles)
                             <button class="btn btn-secondary ms-2" wire:click="openFolder('{{ $currentFolderModel?->parent_id ?? 'null' }}')">
-                                <i class="bi bi-arrow-up"></i> Наверх
+                                <i class="bi bi-arrow-up"></i> {{ __('Up') }}
                             </button>
                         @endif
                     </div>
@@ -227,13 +230,13 @@
                                wire:model.live="showAllFiles"
                                id="viewToggle">
                         <label class="form-check-label" for="viewToggle">
-                            {{ $showAllFiles ? 'Показать все документы' : 'Показать по папкам' }}
+                            {{ $showAllFiles ? __('Show all documents') : __('Show by folders') }}
                         </label>
                     </div>
                     
 
                     <div class="d-flex align-items-center">
-                        <label class="me-2">Документов на странице:</label>
+                        <label class="me-2">{{ __('Documents per page') }}:</label>
                         <select wire:model.live="perPage" class="form-select form-select-sm" style="width: auto;">
                             <option value="12">12</option>
                             <option value="24">24</option>
@@ -291,7 +294,7 @@
                                 </p>
                                 @if($showAllFiles)
                                     <small class="text-muted mb-2">
-                                        Папка: {{ $file->folder ? $file->folderName : 'Корневая директория' }}
+                                        {{ __('Folder') }}: {{ $file->folder ? $file->folderName : __('Root directory') }}
                                     </small>
                                 @endif
                                 <div class="d-flex justify-content-center">
@@ -331,12 +334,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Share Document</h5>
+                        <h5 class="modal-title">{{ __('Share Document') }}</h5>
                         <button type="button" class="btn-close" wire:click="$set('showModal', false)"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3" wire:ignore>
-                            <label class="form-label">Выберите получателей</label>
+                            <label class="form-label">{{ __('Select recipients') }}</label>
                             <select class="form-control share-select @error('selectedUsers') is-invalid @enderror" 
                                     multiple 
                                     wire:model="selectedUsers"
@@ -359,12 +362,12 @@
                         @enderror
 
                         <div class="mb-3">
-                            <label class="form-label">Сообщение (необязательно)</label>
+                            <label class="form-label">{{ __('Message (optional)') }}</label>
                             <textarea 
                                 class="form-control @error('message') is-invalid @enderror" 
                                 wire:model="message" 
                                 rows="3"
-                                placeholder="Введите сообщение для получателей"></textarea>
+                                placeholder="{{ __('Enter message for recipients') }}"></textarea>
                             @error('message')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -373,8 +376,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">Close</button>
-                        <button type="button" class="btn btn-primary" wire:click="shareDocument">Share</button>
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">{{ __('Close') }}</button>
+                        <button type="button" class="btn btn-primary" wire:click="shareDocument">{{ __('Share') }}</button>
                     </div>
                 </div>
             </div>
@@ -390,12 +393,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Создание новой папки</h5>
+                            <h5 class="modal-title">{{ __('Create new folder') }}</h5>
                             <button type="button" class="btn-close" wire:click="$set('showCreateModal', false)"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="newFolderName" class="form-label">Имя папки</label>
+                                <label for="newFolderName" class="form-label">{{ __('Folder name') }}</label>
                                 <input type="text" 
                                        class="form-control @error('newFolderName') is-invalid @enderror" 
                                        id="newFolderName" 
@@ -406,8 +409,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showCreateModal', false)">Отмена</button>
-                            <button type="button" class="btn btn-primary" wire:click="createFolder">Создать</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showCreateModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-primary" wire:click="createFolder">{{ __('Create') }}</button>
                         </div>
                     </div>
                 </div>
@@ -421,15 +424,15 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Подтверждение удаления</h5>
+                            <h5 class="modal-title">{{ __('Confirm deletion') }}</h5>
                             <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Вы уверены, что хотите удалить эту папку?</p>
+                            <p>{{ __('Are you sure you want to delete this folder?') }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Отмена</button>
-                            <button type="button" class="btn btn-danger" wire:click="deleteFolder">Удалить</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-danger" wire:click="deleteFolder">{{ __('Delete') }}</button>
                         </div>
                     </div>
                 </div>
@@ -443,12 +446,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Переименование папки</h5>
+                            <h5 class="modal-title">{{ __('Rename folder') }}</h5>
                             <button type="button" class="btn-close" wire:click="$set('showRenameModal', false)"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="newName" class="form-label">Новое имя папки</label>
+                                <label for="newName" class="form-label">{{ __('New folder name') }}</label>
                                 <input type="text" 
                                        class="form-control @error('newName') is-invalid @enderror" 
                                        id="newName" 
@@ -459,8 +462,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">Отмена</button>
-                            <button type="button" class="btn btn-primary" wire:click="renameFolder">Сохранить</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-primary" wire:click="renameFolder">{{ __('Save') }}</button>
                         </div>
                     </div>
                 </div>
@@ -474,15 +477,15 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Подтверждение удаления</h5>
+                            <h5 class="modal-title">{{ __('Confirm file deletion') }}</h5>
                             <button type="button" class="btn-close" wire:click="$set('showFileDeleteModal', false)"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Вы уверены, что хотите удалить этот файл?</p>
+                            <p>{{ __('Are you sure you want to delete this file?') }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showFileDeleteModal', false)">Отмена</button>
-                            <button type="button" class="btn btn-danger" wire:click="deleteFile">Удалить</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showFileDeleteModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-danger" wire:click="deleteFile">{{ __('Delete') }}</button>
                         </div>
                     </div>
                 </div>
@@ -497,7 +500,7 @@
 
     <!-- Добавим информацию о количестве документов -->
     <div class="text-muted text-center mt-2">
-        Показано {{ $documents->firstItem() ?? 0 }}-{{ $documents->lastItem() ?? 0 }} из {{ $documents->total() }} документов
+        {{ __('Showing') }} {{ $documents->firstItem() ?? 0 }}-{{ $documents->lastItem() ?? 0 }} {{ __('of') }} {{ $documents->total() }} {{ __('documents') }}
     </div>
 
     @if(app()->environment('local'))
