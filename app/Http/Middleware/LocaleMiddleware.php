@@ -18,7 +18,13 @@ class LocaleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Session::has('locale')) {
+            // Используем сохраненное значение из сессии
             App::setLocale(Session::get('locale'));
+        } else {
+            // Используем дефолтное значение из конфигурации
+            App::setLocale(config('app.locale'));
+            // Опционально: сохраняем дефолтное значение в сессию
+            Session::put('locale', config('app.locale'));
         }
         return $next($request);
     }

@@ -65,7 +65,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 // Route::get('/admin', AdminController::class)->middleware('role:admin');
 
 
-Route::middleware('guest')->group(function (){
+Route::middleware('guest', 'locale')->group(function (){
     Route::get('register', Register::class)->name('register');
     Route::get('login', Login::class)->name('login');
 });
