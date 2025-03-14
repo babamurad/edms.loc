@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h4>Управление ролями</h4>
+            <h4>{{ __('Role Management') }}</h4>
         </div>
         <div class="card-body">
             @if (session()->has('success'))
@@ -19,26 +19,26 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Выберите пользователя</h5>
+                    <h5>{{ __('Select a user') }}</h5>
                     <livewire:components.custom-select 
                         :options="$userOptions"
                         :selected="$selectedUser"
-                        placeholder="Выберите пользователя..."
+                        placeholder="{{ __('Select a user...') }}"
                         wire:key="user-select" />
 
                     <select wire:model.live="selectedRole" class="form-control mt-2">
-                        <option value="">Выберите роль</option>
+                        <option value="">{{ __('Select a role') }}</option>
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach
                     </select>
 
-                    <button wire:click="assignRole" class="btn btn-primary mt-2">Назначить роль</button>
+                    <button wire:click="assignRole" class="btn btn-primary mt-2">{{ __('Assign role') }}</button>
                 </div>
 
                 <div class="col-md-6">
                     @if($selectedUser)
-                        <h5>Текущие роли пользователя</h5>
+                        <h5>{{ __('Current user roles') }}</h5>
                         @if(count($userRoles) > 0)
                             <div class="list-group">
                                 @foreach($userRoles as $role)
@@ -46,7 +46,7 @@
                                         {{ $role->name }}
                                         <button wire:click="removeRole({{ $role->id }})" 
                                                 class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Вы уверены, что хотите удалить эту роль?')">
+                                                onclick="return confirm('{{ __('Are you sure you want to remove this role?') }}')">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
@@ -54,7 +54,7 @@
                             </div>
                         @else
                             <div class="alert alert-info">
-                                У пользователя нет назначенных ролей
+                                {{ __('User has no assigned roles') }}
                             </div>
                         @endif
                     @endif

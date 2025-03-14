@@ -91,7 +91,6 @@
     "Message (optional)": "Сообщение (необязательно)",
     "Enter message for recipients": "Введите сообщение для получателей",
     "Close": "Закрыть",
-    "Share": "Поделиться",
     "Create new folder": "Создание новой папки",
     "Folder name": "Имя папки",
     "Apply": "Применить",
@@ -126,6 +125,17 @@
     "Last Month": "Прошлый месяц",
     "Default file input (max 20mb)": "Загрузка файла (макс. 20мб)",
     "Published": "Опубликовано",
-    "Select an category": "Выберите категорию",
-    "Document": "Документ"
+    "Select a category": "Выберите категорию",
+    "Document": "Документ",
+    "Department" : "Отдел",
+    "Role Management": "Управление ролями",
+    "Select a user": "Выберите пользователя",
+    "Select a user...": "Выберите пользователя...",
+    "Select a role": "Выберите роль",
+    "Assign role": "Назначить роль",
+    "Current user roles": "Текущие роли пользователя",
+    "Are you sure you want to remove this role?": "Вы уверены, что хотите удалить эту роль?",
+    "User has no assigned roles": "У пользователя нет назначенных ролей",
+    "Search...": "Поиск...",
+    "No results found": "Результаты не найдены"
 }

@@ -54,7 +54,7 @@ Route::middleware('auth', 'locale')->group(function (){
     Route::get('documents/inbox', DocumentInbox::class)->name('documents.inbox');
 });
 
-Route::group(['middleware' => ['role:admin']], function () {
+Route::middleware('role:admin', 'locale')->group(function (){
     Route::get('role-manager', RoleManager::class)->name('role-manager');
 
     Route::get('user-manager', UserManager::class)->name('user-manager');

@@ -17,7 +17,7 @@
                 @click.stop
                 type="text" 
                 class="w-full px-2 py-1 border rounded text-sm focus:outline-none focus:border-blue-500"
-                placeholder="Search..."
+                placeholder="{{ __('Search...') }}"
             >
         </div>
 
@@ -31,7 +31,7 @@
             </template>
             <li x-show="filteredOptions.length === 0" 
                 class="p-2 text-gray-500 text-sm">
-                No results found
+                {{ __('No results found') }}
             </li>
         </ul>
     </div>

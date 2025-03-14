@@ -113,7 +113,7 @@
                                 @if(session()->get('locale') == 'tk')
                                 <img src="{{ asset('assets/images/flags/turkmen.png') }}" alt="user-image" class="me-0 me-sm-1" height="12">
                                 <span class="align-middle d-none d-lg-inline-block">Türkmen</span> <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
-                                @elseif(session()->get('locale') == 'ru' || strlen(session()->get('locale') == 'ru') == 0)
+                                @elseif(session()->get('locale') == 'ru' || session()->get('locale') == null)
                                 <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image" class="me-0 me-sm-1" height="12">
                                 <span class="align-middle d-none d-lg-inline-block">Русский</span> <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
                                 @endif

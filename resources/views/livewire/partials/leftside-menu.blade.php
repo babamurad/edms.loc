@@ -4,7 +4,7 @@
     <a href="/" class="logo logo-light">
         <span class="logo-lg">
             <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo">
-            <span class="text-white ms-1 fs-20">Hakimlik</span>
+            <span class="text-white ms-1 fs-20">Häkimlik</span>
         </span>
         <span class="logo-sm">
             <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo">
@@ -48,6 +48,18 @@
                     <span> {{ __('Category') }} </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
+                    <i class="ri-user-settings-fill"></i>
+                    <span> {{ __('Role Manager') }} </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('user-manager') }}" class="side-nav-link {{ request()->is('user-manager') ? 'active' : '' }}">
+                    <i class="ri-team-fill"></i>
+                    <span> {{ __('User Manager') }} </span>
+                </a>
+            </li>
             @endif
             <li class="side-nav-item">
                 <a href="{{ route('documents') }}" 
@@ -69,22 +81,7 @@
                         <span class="badge bg-danger rounded-pill">{{ $unreadCount }}</span>
                     @endif
                 </a>
-            </li>
-
-            @if(auth()->user()->hasRole('admin'))
-            <li class="side-nav-item">
-                <a href="{{ route('role-manager') }}" class="side-nav-link {{ request()->is('role-manager') ? 'active' : '' }}">
-                    <i class="ri-user-settings-fill"></i>
-                    <span> {{ __('Roles Manager') }} </span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('user-manager') }}" class="side-nav-link {{ request()->is('user-manager') ? 'active' : '' }}">
-                    <i class="ri-team-fill"></i>
-                    <span> {{ __('User Manager') }} </span>
-                </a>
-            </li>
-            @endif            
+            </li>           
 
         </ul>
         <!--- End Sidemenu -->
