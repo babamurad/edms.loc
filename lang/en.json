@@ -59,5 +59,18 @@
     "Looks good!": "Looks good!",
     "Create Category": "Create Category",
     "Select Department": "Select Department",
-    "Edit Department": "Edit Department"
+    "Edit Department": "Edit Department",
+    "Categories List" : "Categories List",
+    "File Manager": "File Manager",
+    "Notifications": "Notifications",
+    "Language": "Language",
+    "Change Password": "Change Password",
+    "Current Password": "Current Password",
+    "New Password": "New Password",
+    "Confirm Password": "Confirm Password",
+    "Submit": "Submit",
+    "Upload File": "Upload File",
+    "Choose File": "Choose File",
+    "No file chosen": "No file chosen",
+    "Max file size": "Max file size"
 }

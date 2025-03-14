@@ -61,5 +61,18 @@
     "Looks good!": "Выглядит хорошо!",
     "Create Category": "Создать категорию",
     "Select Department": "Выберите отдел",
-    "Edit Department": "Редактировать отдел"
+    "Edit Department": "Редактировать отдел",
+    "Categories List" : "Список категорий",
+    "File Manager": "Файловый менеджер",
+    "Notifications": "Уведомления",
+    "Language": "Язык",
+    "Change Password": "Изменить пароль",
+    "Current Password": "Текущий пароль",
+    "New Password": "Новый пароль",
+    "Confirm Password": "Подтвердить пароль",
+    "Submit": "Отправить",
+    "Upload File": "Загрузить файл",
+    "Choose File": "Выбрать файл",
+    "No file chosen": "Файл не выбран",
+    "Max file size": "Максимальный размер файла"
 }

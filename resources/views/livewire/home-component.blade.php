@@ -66,9 +66,3 @@
     </div> <!-- end col-->
 </div>
 </div>
-@push('apex-chart')
-<!-- Apex Charts js -->
-<script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
-<!-- Dashboard App js -->
-<script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-@endpush

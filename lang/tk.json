@@ -59,5 +59,18 @@
     "Looks good!": "Gowy görünýär!",
     "Create Category": "Kategoriýa döretmek",
     "Select Department": "Bölüm saýlaň",
-    "Edit Department": "Bölümi üýtgetmek"
+    "Edit Department": "Bölümi üýtgetmek",
+    "Categories List" : "Kategoriýalar sanawy",
+    "File Manager": "Faýl dolandyryjysy",
+    "Notifications": "Bildirişler",
+    "Language": "Dil",
+    "Change Password": "Paroly üýtgetmek",
+    "Current Password": "Häzirki parol",
+    "New Password": "Täze parol",
+    "Confirm Password": "Paroly tassyklaň",
+    "Submit": "Ugratmak",
+    "Upload File": "Faýl ýüklemek",
+    "Choose File": "Faýl saýlaň",
+    "No file chosen": "Faýl saýlanmady",
+    "Max file size": "Maksimum faýl ölçegi"
 }

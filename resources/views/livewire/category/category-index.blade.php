@@ -4,9 +4,8 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item"><a href="{{ route('department') }}">{{ __('Categories') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('List') }}</li>
                 </ol>
             </div>
             <h4 class="page-title">{{ __('Categories') }}</h4>
@@ -17,7 +16,7 @@
         <div class="card-header">
             <div class="d-flex  justify-content-between">
                 <h4 class="header-title">{{ __('Categories List') }}</h4>
-                <a href="{{ route('category.create') }}" type="button" class="btn btn-primary">Create</a>
+                <a href="{{ route('category.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -25,11 +24,11 @@
                 <table class="table table-hover table-centered mb-0">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Department</th>
-                        <th>Slug</th>
-                        <th>Action</th>
+                        <th>{{ __('ID') }}</th>
+                        <th>{{ __('Title') }}</th>
+                        <th>{{ __('Department') }}</th>
+                        <th>{{ __('Slug') }}</th>
+                        <th>{{ __('Action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,7 +55,7 @@
                     </tbody>
                 </table>
                 @if(!$categories)
-                    <p>No items found.</p>
+                    <p>{{ __('No items found.') }}</p>
                 @else
                     {{ $categories->links() }}
                 @endif
