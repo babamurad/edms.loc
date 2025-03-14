@@ -4,11 +4,11 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{ route('user-manager') }}">Users</a></li>
-                        <li class="breadcrumb-item active">Edit User</li>
+                        <li class="breadcrumb-item"><a href="{{ route('user-manager') }}">{{ __('Users') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('Edit User') }}</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Edit User</h4>
+                <h4 class="page-title">{{ __('Edit User') }}</h4>
             </div>
         </div>
     </div>
@@ -19,27 +19,27 @@
                 <div class="card-body">
                     <form wire:submit="update">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">{{ __('Name') }}</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
                             @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">{{ __('Email') }}</label>
                             <input type="email" class="form-control" id="email" wire:model="email">
                             @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password (leave empty to keep current)</label>
+                            <label for="password" class="form-label">{{ __('Password (leave empty to keep current)') }}</label>
                             <input type="password" class="form-control" id="password" wire:model="password">
                             @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="department" class="form-label">Department</label>
+                            <label for="department" class="form-label">{{ __('Department') }}</label>
                             <select class="form-control" id="department" wire:model="department_id">
-                                <option value="">Select Department</option>
+                                <option value="">{{ __('Select Department') }}</option>
                                 @foreach($departments as $department)
                                     <option value="{{ $department->id }}">{{ $department->title }}</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Roles</label>
+                            <label class="form-label">{{ __('Roles') }}</label>
                             <div class="mt-2">
                                 @foreach($roles as $role)
                                     <div class="form-check">
@@ -66,8 +66,8 @@
                             @error('selectedRoles') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update User</button>
-                        <a href="{{ route('user-manager') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">{{ __('Update User') }}</button>
+                        <a href="{{ route('user-manager') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
                     </form>
                 </div>
             </div>

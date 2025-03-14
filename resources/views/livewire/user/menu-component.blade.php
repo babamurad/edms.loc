@@ -16,13 +16,13 @@
     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
         <!-- item-->
         <div class=" dropdown-header noti-title">
-            <h6 class="text-overflow m-0">Welcome !</h6>
+            <h6 class="text-overflow m-0">{{ __('Welcome !') }}</h6>
         </div>
 
         <!-- item-->
         <a href="{{ route('profile') }}" class="dropdown-item">
             <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-            <span>My Account</span>
+            <span>{{ __('My Account') }}</span>
         </a>
 
         {{-- <!-- item-->
@@ -40,7 +40,7 @@
         <!-- item-->
         <a href="#" class="dropdown-item" wire:click="logout">
             <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
-            <span>Logout</span>
+            <span>{{ __('Logout') }}</span>
         </a>
     </div>
 </li>

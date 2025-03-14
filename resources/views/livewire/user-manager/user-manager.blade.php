@@ -4,9 +4,8 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Users</li>
+                    <li class="breadcrumb-item"><a href="{{ route('department') }}">{{ __('Users') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('List') }}</li>
                 </ol>
             </div>
             <h4 class="page-title">{{ __('Users') }}</h4>
@@ -17,7 +16,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="header-title">{{ __('Users List') }}</h4>
-                <a href="{{ route('user.create') }}" type="button" class="btn btn-primary">Create</a>
+                <a href="{{ route('user.create') }}" type="button" class="btn btn-primary">{{ __('Create') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -29,7 +28,7 @@
                             wire:model.live="search" 
                             type="text" 
                             class="form-control" 
-                            placeholder="Search by name or email..."
+                            placeholder="{{ __('Search by name or email...') }}"
                         >
                         <span class="input-group-text">
                             <i class="bi bi-search"></i>
@@ -38,7 +37,7 @@
                 </div>
                 <div class="col-md-4">
                     <select wire:model.live="selectedDepartment" class="form-select">
-                        <option value="">All Departments</option>
+                        <option value="">{{ __('All Departments') }}</option>
                         @foreach($departments as $department)
                             <option value="{{ $department->id }}">{{ $department->title }}</option>
                         @endforeach
@@ -46,10 +45,10 @@
                 </div>
                 <div class="col-md-2">
                     <select wire:model.live="perPage" class="form-select">
-                        <option value="8">8 per page</option>
-                        <option value="15">15 per page</option>
-                        <option value="25">25 per page</option>
-                        <option value="50">50 per page</option>
+                        <option value="8">8 {{ __('per page') }}</option>
+                        <option value="15">15 {{ __('per page') }}</option>
+                        <option value="25">25 {{ __('per page') }}</option>
+                        <option value="50">50 {{ __('per page') }}</option>
                     </select>
                 </div>
             </div>
@@ -59,12 +58,12 @@
                 <table class="table table-hover table-centered mb-0">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Department</th>
-                        <th>Roles</th>
-                        <th>Action</th>
+                        <th>{{ __('ID') }}</th>
+                        <th>{{ __('Name') }}</th>
+                        <th>{{ __('Email') }}</th>
+                        <th>{{ __('Department') }}</th>
+                        <th>{{ __('Roles') }}</th>
+                        <th>{{ __('Action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -77,7 +76,7 @@
                                 @if($user->department)
                                     <span class="badge bg-primary">{{ $user->department->title }}</span>
                                 @else
-                                    <span class="badge bg-secondary">No Department</span>
+                                    <span class="badge bg-secondary">{{ __('No Department') }}</span>
                                 @endif
                             </td>
                             <td>
@@ -92,7 +91,7 @@
                                 @if($user->id !== auth()->id())
                                     <button type="button" class="btn btn-sm btn-danger" 
                                             @click="showModal = true; delId = {{ $user->id }}">
-                                        <i class="bi bi-trash-fill"></i>
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 @endif
                             </td>
@@ -103,7 +102,7 @@
                 
                 @if($users->isEmpty())
                     <div class="text-center py-3">
-                        <p class="text-muted">No users found matching your criteria.</p>
+                        <p class="text-muted">{{ __('No users found matching your criteria.') }}</p>
                     </div>
                 @else
                     <div class="mt-3">

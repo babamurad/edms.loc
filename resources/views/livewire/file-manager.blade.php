@@ -376,7 +376,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">{{ __('Close') }}</button>
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">
+                            <i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i> {{ __('Close') }}
+                        </button>
                         <button type="button" class="btn btn-primary" wire:click="shareDocument">{{ __('Share') }}</button>
                     </div>
                 </div>
@@ -409,7 +411,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showCreateModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showCreateModal', false)">
+                                <i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i> {{ __('Cancel') }}
+                            </button>
                             <button type="button" class="btn btn-primary" wire:click="createFolder">{{ __('Create') }}</button>
                         </div>
                     </div>
@@ -431,8 +435,12 @@
                             <p>{{ __('Are you sure you want to delete this folder?') }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">{{ __('Cancel') }}</button>
-                            <button type="button" class="btn btn-danger" wire:click="deleteFolder">{{ __('Delete') }}</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">
+                                <i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i> {{ __('Cancel') }}
+                            </button>
+                            <button type="button" class="btn btn-danger" wire:click="deleteFolder">
+                                <i class="bi bi-trash"></i> {{ __('Delete') }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -462,7 +470,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">{{ __('Cancel') }}</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showRenameModal', false)">
+                                <i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i> {{ __('Cancel') }}
+                            </button>
                             <button type="button" class="btn btn-primary" wire:click="renameFolder">{{ __('Save') }}</button>
                         </div>
                     </div>
@@ -484,8 +494,12 @@
                             <p>{{ __('Are you sure you want to delete this file?') }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showFileDeleteModal', false)">{{ __('Cancel') }}</button>
-                            <button type="button" class="btn btn-danger" wire:click="deleteFile">{{ __('Delete') }}</button>
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showFileDeleteModal', false)">
+                                <i class="ri-delete-back-2-line me-1 fs-16 lh-1"></i> {{ __('Cancel') }}
+                            </button>
+                            <button type="button" class="btn btn-danger" wire:click="deleteFile">
+                                <i class="bi bi-trash"></i> {{ __('Delete') }}
+                            </button>
                         </div>
                     </div>
                 </div>

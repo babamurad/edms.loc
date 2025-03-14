@@ -45,7 +45,7 @@
                                     </a>
                                     <button type="button" class="btn btn-sm btn-danger" style="float: none;" 
                                             @click="showModal = true, delId={{ $category->id }}">
-                                        <i class="bi bi-trash-fill"></i>
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 @endif
                             </td>

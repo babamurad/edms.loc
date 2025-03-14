@@ -42,7 +42,9 @@
                         <a href="{{ asset($doc->FileUrl) }}" target="_blank" class="btn btn-sm btn-success me-1"><i class="bi bi-eye"></i></a>
                         <a href="{{ route('documents.edit', ['id' => $doc->id]) }}" class="btn btn-sm btn-info me-1"><i class="bi bi-pencil"></i></a>
                         <livewire:document-share :document="$doc" :wire:key="'share-'.$doc->id" />
-                        <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger ms-1"><i class="bi bi-trash"></i></button>
+                        <button wire:click="delete({{ $doc->id }})" class="btn btn-sm btn-danger ms-1">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -81,11 +83,13 @@
                             <td><span class="badge bg-primary">{{ @$document->department->title }}</span></td>
                             <td>{{ $document->slug }}</td>
                             <td>
-                                <a type="button" href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn btn-sm btn-success" style="float: none;"><span class="mdi mdi-pencil"></span></a>
+                                <a type="button" href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn btn-sm btn-success" style="float: none;">
+                                    <i class="ri-edit-line"></i>
+                                </a>
                                 <livewire:document-share :document="$document" :wire:key="'share-table-'.$document->id" />
                                 <button type="button" class="btn btn-sm btn-danger" style="float: none;"
                                         @click="showModal = true, delId={{ $document->id }}">
-                                    <i class="bi bi-trash-fill"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </td>
                         </tr>
