@@ -121,5 +121,11 @@
     "Last 7 Days": "Last 7 Days",
     "Last 30 Days": "Last 30 Days",
     "This Month": "This Month",
-    "Last Month": "Last Month"
+    "Last Month": "Last Month",
+    "Default file input (max 20mb)": "Default file input (max 20mb)",
+    "Published": "Published",
+    "Select an department": "Select an department",
+    "Select an category": "Select an category",
+    "Slug": "Slug",
+    "Document": "Document"
 }

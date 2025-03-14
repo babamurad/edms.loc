@@ -2,6 +2,11 @@
 @push('editor')
         <!-- Place the first <script> tag in your HTML's <head> -->
         <script src="https://cdn.tiny.cloud/1/qy6br6hv4eka47gk5sagtw30xm277yas11wmuvkj9n56phr7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <!-- Добавляем языковые файлы -->
+        <script>
+            // Настраиваем путь к языковым файлам
+            tinymce.baseURL = "{{ asset('js/tinymce') }}";
+        </script>
 @endpush
 
 @push('summernote')
@@ -9,7 +14,7 @@
         <script>
             tinymce.init({
                 selector: '#editor',
-                language: 'ru',
+                language: '{{ app()->getLocale() }}', // Динамически устанавливаем язык из текущей локали
                 height: 600,
                 plugins: [
                     // Core editing features
@@ -41,7 +46,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4 class="header-title">Document</h4>
+            <h4 class="header-title">{{ __('Document') }}</h4>
         </div>
         <div class="card-body" x-data="{ activeTab: 'attributes', contentDocs: '' }">
             <ul class="nav nav-tabs nav-bordered mb-3" role="tablist">

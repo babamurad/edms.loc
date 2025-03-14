@@ -123,5 +123,9 @@
     "Last 7 Days": "Последние 7 дней",
     "Last 30 Days": "Последние 30 дней",
     "This Month": "Этот месяц",
-    "Last Month": "Прошлый месяц"
+    "Last Month": "Прошлый месяц",
+    "Default file input (max 20mb)": "Загрузка файла (макс. 20мб)",
+    "Published": "Опубликовано",
+    "Select an category": "Выберите категорию",
+    "Document": "Документ"
 }

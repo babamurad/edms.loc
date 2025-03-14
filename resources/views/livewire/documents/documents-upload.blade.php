@@ -2,7 +2,7 @@
         <form wire:submit.prevent="saveDocument">
             @csrf
         <div class="card-header">
-            <h4 class="header-title">Document</h4>
+            <h4 class="header-title">{{ __('Document') }}</h4>
         </div>
         <div class="card-body" x-data="{ activeTab: 'attributes', contentDocs: '' }">
 
@@ -11,8 +11,7 @@
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="mb-3">
-                                <label for="example-fileinput" class="form-label">Default file
-                                    input (max 20mb)</label>
+                                <label for="example-fileinput" class="form-label">{{ __('Default file input (max 20mb)') }}</label>
                                 <input type="file" id="example-fileinput" class="form-control" wire:model="file">
                                 @error('file') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
