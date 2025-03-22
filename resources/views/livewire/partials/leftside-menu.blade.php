@@ -35,7 +35,8 @@
                     <span> {{ __('Dashboard') }} </span>
                 </a>
             </li>
-            <li class="side-nav-item {{ request()->routeIs('department') || request()->routeIs('department.create') || request()->routeIs('department.edit') ? 'menuitem-active' : '' }}">
+            @if (auth()->user()->hasRole('admin'))
+             <li class="side-nav-item {{ request()->routeIs('department') || request()->routeIs('department.create') || request()->routeIs('department.edit') ? 'menuitem-active' : '' }}">
                 <a href="{{ route('department') }}" class="side-nav-link {{ request()->routeIs('department') || request()->routeIs('department.create') || request()->routeIs('department.edit') ? 'active' : '' }}">
                     <i class="ri-archive-drawer-fill"></i>
                     <span> {{ __('Departments') }} </span>
@@ -58,7 +59,17 @@
                     <i class="ri-team-fill"></i>
                     <span> {{ __('User Manager') }} </span>
                 </a>
+            </li>   
+            @endif
+
+            <li class="side-nav-item">
+                <a href="{{ route('documents.upload') }}" 
+                   class="side-nav-link {{ request()->routeIs('documents.upload') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-plus"></i>
+                    <span> {{ __('Create Document') }} </span>
+                </a>
             </li>
+            
             <li class="side-nav-item">
                 <a href="{{ route('documents') }}" 
                    class="side-nav-link {{ request()->routeIs('documents') ? 'active' : '' }}">
@@ -66,8 +77,9 @@
                     <span> {{ __('Documents') }} </span>
                 </a>
             </li>
+
             <li class="side-nav-item">
-                <a href="{{ route('documents.inbox') }}" class="side-nav-link">
+                <a href="{{ route('documents.inbox') }}" class="side-nav-link {{ request()->routeIs('documents.inbox') ? 'active' : '' }}">
                     <i class="bi bi-inbox"></i>
                     <span>{{ __('Inbox') }}</span>
                     @php
@@ -79,7 +91,14 @@
                         <span class="badge bg-danger rounded-pill">{{ $unreadCount }}</span>
                     @endif
                 </a>
-            </li>           
+            </li>
+            
+            <li class="side-nav-item">
+                <a href="{{ route('documents.outbox') }}" class="side-nav-link {{ request()->routeIs('documents.outbox') ? 'active' : '' }}">
+                    <i class="bi bi-send"></i>
+                    <span>{{ __('Outbox') }}</span>
+                </a>
+            </li>
 
         </ul>
         <!--- End Sidemenu -->

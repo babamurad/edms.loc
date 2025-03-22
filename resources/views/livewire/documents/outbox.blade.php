@@ -6,10 +6,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                        <li class="breadcrumb-item active">Inbox</li>
+                        <li class="breadcrumb-item active">{{ __('Outbox') }}</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Inbox</h4>
+                <h4 class="page-title">{{ __('Outbox') }}</h4>
             </div>
         </div>
     </div>
@@ -18,10 +18,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Incoming Documents</h4>
+                    <h4 class="card-title">{{ __('Sent Documents') }}</h4>
                 </div>
                 <div class="card-body">
-                    <!-- Добавляем панель поиска и выбора количества записей -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="input-group">
@@ -51,7 +50,7 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('Document') }}</th>
-                                    <th>{{ __('From') }}</th>
+                                    <th>{{ __('To') }}</th>
                                     <th>{{ __('Message') }}</th>
                                     <th>{{ __('Status') }}</th>
                                     <th>{{ __('Date') }}</th>
@@ -60,9 +59,9 @@
                             </thead>
                             <tbody>
                                 @forelse($shares as $share)
-                                    <tr @class(['table-active' => !$share->read_at])>
+                                    <tr>
                                         <td><i class="{{ $share->document->FileIcon }} fs-4 me-1"></i>{{ $share->document->title }}</td>
-                                        <td>{{ $share->sender->name }}</td>
+                                        <td>{{ $share->recipient->name }}</td>
                                         <td>{{ $share->message }}</td>
                                         <td><span class="badge bg-{{ $share->read_at ? 'success' : 'warning' }}">
                                             {{ $share->status->name }}
@@ -70,23 +69,17 @@
                                         <td>{{ $share->created_at->format('d.m.Y H:i') }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{{ asset($share->document->ReceivedFileUrl) }}" 
+                                                <a href="{{ asset($share->document->FileUrl) }}" 
                                                    target="_blank" 
-                                                   class="btn btn-sm btn-primary me-1"
-                                                   wire:click="markAsRead({{ $share->id }})">
+                                                   class="btn btn-sm btn-primary me-1">
                                                     <i class="bi bi-eye"></i> {{ __('View') }}
-                                                </a>
-                                                <a href="{{ asset($share->document->ReceivedFileUrl) }}" 
-                                                   class="btn btn-sm btn-success"
-                                                   download="{{ $share->document->title }}.{{ $share->document->file_extension }}">
-                                                    <i class="bi bi-download"></i> {{ __('Download') }}
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">{{ __('No incoming documents') }}</td>
+                                        <td colspan="6" class="text-center">{{ __('No sent documents') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -105,5 +98,4 @@
             </div>            
         </div>
     </div>
-
 </div>

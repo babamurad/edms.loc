@@ -12,6 +12,7 @@ use App\Livewire\Documents\DocumentsIndex;
 use App\Livewire\Documents\DocumentsUpload;
 use App\Livewire\Documents\DocumentsView;
 use App\Livewire\Documents\DocumentInbox;
+use App\Livewire\Documents\Outbox;
 use App\Livewire\RoleManager;
 use App\Livewire\FileManager;
 use App\Livewire\UserManager\UserManager;
@@ -31,13 +32,7 @@ Route::middleware('auth', 'locale')->group(function (){
 
     Route::get('profile', ProfileComponent::class)->name('profile');
 
-    Route::get('department', DepartmentIndex::class)->name('department');
-    Route::get('department/create', DepartmentCreate::class)->name('department.create');
-    Route::get('department/{id}/edit', DepartmentEdit::class)->name('department.edit');
-
-    Route::get('category', CategoryIndex::class)->name('category');
-    Route::get('category/create', CategoryCreate::class)->name('category.create');
-    Route::get('category/{id}/edit', CategoryEdit::class)->name('category.edit');
+    
 
     // Route::get('documents',DocumentsIndex::class)->name('documents');
     Route::get('documents/{dateStart?}/{dateEnd?}', FileManager::class)
@@ -52,6 +47,7 @@ Route::middleware('auth', 'locale')->group(function (){
     Route::get('documents/upload/{folder?}', DocumentsUpload::class)->name('documents.upload');
 
     Route::get('documents/inbox', DocumentInbox::class)->name('documents.inbox');
+    Route::get('documents/outbox', Outbox::class)->name('documents.outbox');
 });
 
 Route::middleware('role:admin', 'locale')->group(function (){
@@ -60,6 +56,14 @@ Route::middleware('role:admin', 'locale')->group(function (){
     Route::get('user-manager', UserManager::class)->name('user-manager');
     Route::get('user/create', UserCreate::class)->name('user.create');
     Route::get('user/{id}/edit', UserEdit::class)->name('user.edit');
+
+    Route::get('department', DepartmentIndex::class)->name('department');
+    Route::get('department/create', DepartmentCreate::class)->name('department.create');
+    Route::get('department/{id}/edit', DepartmentEdit::class)->name('department.edit');
+
+    Route::get('category', CategoryIndex::class)->name('category');
+    Route::get('category/create', CategoryCreate::class)->name('category.create');
+    Route::get('category/{id}/edit', CategoryEdit::class)->name('category.edit');
 });
 
 // Route::get('/admin', AdminController::class)->middleware('role:admin');
