@@ -31,28 +31,27 @@
                                         </div>
                                         @endif
                                         
-                                        <a href="{{ route('home') }}">to Home</a>
-                                        <h4 class="fs-20">Sign In</h4>
-                                        <p class="text-muted mb-3">Enter your email address and password to access
-                                            account.
+                                        <a href="{{ route('home') }}">{{ __('to Home') }}</a>
+                                        <h4 class="fs-20">{{ __('Sign In') }}</h4>
+                                        <p class="text-muted mb-3">{{ __('Enter your email address and password to access account.') }}
                                         </p>                                        
                                         <!-- form -->
                                         <form wire:submit.prevent="login">
                                             <div class="mb-3">
-                                                <label for="emailaddress" class="form-label">Email address</label>
+                                                <label for="emailaddress" class="form-label">{{ __('Email address') }}</label>
                                                 <input class="form-control @error('email') is-invalid @enderror"
-                                                    type="email" id="emailaddress"wire:model="email" placeholder="Enter your email">
+                                                    type="email" id="emailaddress"wire:model="email" placeholder="{{ __('Enter your email') }}">
                                                 @error('email')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <a href="auth-forgotpw.html" class="text-muted float-end"><small>
-                                                    Forgot your password?</small></a>
-                                                <label for="password" class="form-label">Password</label>
+                                                    {{ __('Forgot your password?') }}</small></a>
+                                                <label for="password" class="form-label">{{ __('Password') }}</label>
                                                 
                                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                                    id="emailaddress" wire:model="password" placeholder="Enter your password">
+                                                    id="emailaddress" wire:model="password" placeholder="{{ __('Enter your password') }}">
                                                 @error('password')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror    
@@ -61,15 +60,14 @@
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input"
                                                         id="checkbox-signin">
-                                                    <label class="form-check-label" for="checkbox-signin">Remember
-                                                        me</label>
+                                                    <label class="form-check-label" for="checkbox-signin">{{ __('Remember me') }}</label>
                                                 </div>
                                             </div>
                                             <div class="mb-0 text-start">
                                                 <button type="submit" class="btn btn-soft-primary w-100">
                                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading wire:target="login"></span>
                                                     <i class="ri-login-circle-fill me-1" wire:loading.remove></i> 
-                                                    <span class="fw-bold">Log In</span> 
+                                                    <span class="fw-bold">{{ __('Log In') }}</span> 
                                                 </button>
                                             </div>                                            
                                         </form>
@@ -84,8 +82,8 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}"
-                            class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline" wire:navigate><b>Sign up</b></a>
+                    <p class="text-dark-emphasis">{{ __("Don't have an account?") }} <a href="{{ route('register') }}"
+                            class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline" wire:navigate><b>{{ __('Sign up') }}</b></a>
                     </p>
                 </div> <!-- end col -->
             </div>
